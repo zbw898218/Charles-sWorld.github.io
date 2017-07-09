@@ -8,16 +8,16 @@
   <link rel="dns-prefetch" href="https://zbw898218.github.io">
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="#JAVA使用JDBC连接数据库的心得#  学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，现在分为：1.获取connect连接2.使用statement和preparedstatement的区别 这二个方面来阐释一下。  ###获取connetc连接  导入jdbc的jar包：创建lib文件夹，将jar包复制到lib文件中，设置中添加该jar包  获取连接数据库的配置信息：">
+  <meta name="description" content="JAVA使用JDBC连接数据库的心得 学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面：  1.获取connect连接 2.使用statement和preparedstatement的区别 1.获取connetc连接1.    导入jdbc的jar包：    创建lib文件夹，将jar包复制到lib文件中，设置中添加该jar包2.    获取连接数据库的配置信息：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="https://zbw898218.github.io/2017/07/09/JDBC基础使用/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="#JAVA使用JDBC连接数据库的心得#  学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，现在分为：1.获取connect连接2.使用statement和preparedstatement的区别 这二个方面来阐释一下。  ###获取connetc连接  导入jdbc的jar包：创建lib文件夹，将jar包复制到lib文件中，设置中添加该jar包  获取连接数据库的配置信息：">
-<meta property="og:updated_time" content="2017-07-09T10:12:18.786Z">
+<meta property="og:description" content="JAVA使用JDBC连接数据库的心得 学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面：  1.获取connect连接 2.使用statement和preparedstatement的区别 1.获取connetc连接1.    导入jdbc的jar包：    创建lib文件夹，将jar包复制到lib文件中，设置中添加该jar包2.    获取连接数据库的配置信息：">
+<meta property="og:updated_time" content="2017-07-09T10:52:11.715Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="#JAVA使用JDBC连接数据库的心得#  学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，现在分为：1.获取connect连接2.使用statement和preparedstatement的区别 这二个方面来阐释一下。  ###获取connetc连接  导入jdbc的jar包：创建lib文件夹，将jar包复制到lib文件中，设置中添加该jar包  获取连接数据库的配置信息：">
+<meta name="twitter:description" content="JAVA使用JDBC连接数据库的心得 学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面：  1.获取connect连接 2.使用statement和preparedstatement的区别 1.获取connetc连接1.    导入jdbc的jar包：    创建lib文件夹，将jar包复制到lib文件中，设置中添加该jar包2.    获取连接数据库的配置信息：">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -158,32 +158,20 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#JAVA使用JDBC连接数据库的心得#</p>
-<blockquote>
-<p>学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，现在分为：<br>1.获取connect连接<br>2.使用statement和preparedstatement的区别</p>
-<p>这二个方面来阐释一下。</p>
+        <hr>
+<h2 id="JAVA使用JDBC连接数据库的心得"><a href="#JAVA使用JDBC连接数据库的心得" class="headerlink" title="JAVA使用JDBC连接数据库的心得"></a>JAVA使用JDBC连接数据库的心得</h2><blockquote>
+<p>学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面：</p>
 </blockquote>
-<p>###获取connetc连接</p>
-<ol>
-<li><p>导入jdbc的jar包：<br>创建lib文件夹，将jar包复制到lib文件中，设置中添加该jar包</p>
-</li>
-<li><p>获取连接数据库的配置信息：</p>
-<p>  String driver=”com.mysql.jdbc.Driver”;<br>  String url=”jdbc:mysql://localhost:3306/studio?serverTimezone=UTC&amp;amp&amp;characterEncoding=utf-8”;<br>  String userName=”root”;<br>  String password=”898218”;</p>
-<p>更优的选择是，将配置信息以键值对的形式保存在一个properties文件中，通过读取该配置文件来获取配置信息</p>
-<p>  Properties per=new Properties（）<br>  per.load()</p>
-</li>
-</ol>
-<p>3.反射注册driver，获取connect对象</p>
-<pre><code>Class.forName(driver);
-Connect conn=DriverManager.getConnect(url,userName,password)
-</code></pre><p><strong>注意 url：<br>需要增加serverTimezone=UTC&amp;amp&amp;characterEncoding=utf-8来设置时间和编码格式</strong></p>
-<p>###使用Statement和Preparedstatement的区别</p>
-<p>1.获取Statement 对象，执行sql语句</p>
+<p>1.获取connect连接</p>
+<p>2.使用statement和preparedstatement的区别</p>
+<h3>1.获取connetc连接</h3><br>1.    导入jdbc的jar包：<br>    创建lib文件夹，将jar包复制到lib文件中，设置中添加该jar包<br><br>2.    获取连接数据库的配置信息：<br><br>        String driver=”com.mysql.jdbc.Driver”;<br>        String url=”jdbc:mysql://localhost:3306/studio?serverTimezone=UTC&amp;amp&amp;characterEncoding=utf-8”;<br>        String userName=”root”;<br>        String password=”898218”;<br><br>    更优的选择是，将配置信息以键值对的形式保存在一个properties文件中，通过读取该配置文件来获取配置信息<br><br>        Properties per=new Properties（）<br>        per.load()<br><br>3.反射注册driver，获取connect对象<br><br>    Class.forName(driver);<br>    Connect conn=DriverManager.getConnect(url,userName,password)<br><br><strong>注意 url：<br>需要增加serverTimezone=UTC&amp;amp&amp;characterEncoding=utf-8来设置时间和编码格式</strong><br><br><br><h3>2.使用Statement和Preparedstatement的区别</h3>
+
+<p>2.1 获取Statement 对象，执行sql语句</p>
 <pre><code>Statement stm=conn.createStatement() 
 ResultSet rst=stm.executeQuery(sql)//查询
 stm.executeUpdate(sql,int[] columnIndexes)//更新
 ...
-</code></pre><p>2.获取PreparedStatement</p>
+</code></pre><p>2.2 获取PreparedStatement</p>
 <pre><code>PreparedStatement pstm=conn.prepareStatement(sql)
 pstm.setInt(1,int值)
 pstm.setString(2，String值)
@@ -194,10 +182,10 @@ pstm.executeBatch();//执行
 </code></pre><p>**注意：</p>
 <pre><code>1.    使用PreparedStatement时，conn.setAutoCommit(false)
     将自动提交关闭**
-</code></pre><p><strong>3.区别</strong></p>
-<p>3.1        PreparedStatement是预编译的,对于批量处理可以大大提高效率.也叫JDBC存储过程</p>
-<p>3.2        使用 Statement 对象。在对数据库只执行一次性存取的时侯，用      Statement 对象进行处理。PreparedStatement对象的开销比Statement大，对于一次性操作并不会带来额外的好处。</p>
-<p>3.3        statement每次执行sql语句，相关数据库都要执行sql语句的编译，preparedstatement是预编译得,preparedstatement支    持批处理</p>
+</code></pre><p><strong>2.3 区别</strong></p>
+<p>1        PreparedStatement是预编译的,对于批量处理可以大大提高效率.也叫JDBC存储过程</p>
+<p>2        使用 Statement 对象。在对数据库只执行一次性存取的时侯，用      Statement 对象进行处理。PreparedStatement对象的开销比Statement大，对于一次性操作并不会带来额外的好处。</p>
+<p>3        statement每次执行sql语句，相关数据库都要执行sql语句的编译，preparedstatement是预编译得,preparedstatement支    持批处理</p>
 
       
 
