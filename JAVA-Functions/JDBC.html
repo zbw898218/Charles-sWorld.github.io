@@ -8,16 +8,16 @@
   <link rel="dns-prefetch" href="https://zbw898218.github.io">
   <title>JAVA使用JDBC连接数据库的心得 | Charles Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面： 1.获取connect连接 2.使用statement和preparedstatement的区别  1.获取connetc连接1.    导入jdbc的jar包：    创建lib文件夹，将jar包复制到lib文件中，设置中添加该jar包2.    获取连接数据库的配置信息：        String driver=">
+  <meta name="description" content="学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面： 1.获取connect连接 2.使用statement和preparedstatement的区别1.获取connetc连接1.    导入jdbc的jar包：    创建lib文件夹，将jar包复制到lib文件中，设置中添加该jar包2.    获取连接数据库的配置信息：        String driver=”c">
 <meta property="og:type" content="website">
 <meta property="og:title" content="JAVA使用JDBC连接数据库的心得">
 <meta property="og:url" content="https://zbw898218.github.io/JAVA-Functions/JDBC.html">
 <meta property="og:site_name" content="Charles Blog">
-<meta property="og:description" content="学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面： 1.获取connect连接 2.使用statement和preparedstatement的区别  1.获取connetc连接1.    导入jdbc的jar包：    创建lib文件夹，将jar包复制到lib文件中，设置中添加该jar包2.    获取连接数据库的配置信息：        String driver=">
-<meta property="og:updated_time" content="2017-07-09T11:32:41.821Z">
+<meta property="og:description" content="学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面： 1.获取connect连接 2.使用statement和preparedstatement的区别1.获取connetc连接1.    导入jdbc的jar包：    创建lib文件夹，将jar包复制到lib文件中，设置中添加该jar包2.    获取连接数据库的配置信息：        String driver=”c">
+<meta property="og:updated_time" content="2017-07-09T11:38:52.789Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA使用JDBC连接数据库的心得">
-<meta name="twitter:description" content="学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面： 1.获取connect连接 2.使用statement和preparedstatement的区别  1.获取connetc连接1.    导入jdbc的jar包：    创建lib文件夹，将jar包复制到lib文件中，设置中添加该jar包2.    获取连接数据库的配置信息：        String driver=">
+<meta name="twitter:description" content="学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面： 1.获取connect连接 2.使用statement和preparedstatement的区别1.获取connetc连接1.    导入jdbc的jar包：    创建lib文件夹，将jar包复制到lib文件中，设置中添加该jar包2.    获取连接数据库的配置信息：        String driver=”c">
   
     <link rel="alternative" href="/atom.xml" title="Charles Blog" type="application/atom+xml">
   
@@ -166,7 +166,7 @@
 
         
         <a href="/JAVA-Functions/JDBC.html" class="archive-article-date">
-  	<time datetime="2017-07-09T11:32:41.821Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-09</time>
+  	<time datetime="2017-07-09T11:38:52.789Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-09</time>
 </a>
         
       </header>
@@ -175,9 +175,7 @@
       
         <p>学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面：</p>
 <p>1.获取connect连接</p>
-<p>2.使用statement和preparedstatement的区别</p>
-<hr>
-<h2>1.获取connetc连接</h2><br>1.    导入jdbc的jar包：<br>    创建lib文件夹，将jar包复制到lib文件中，设置中添加该jar包<br><br>2.    获取连接数据库的配置信息：<br><br>        String driver=”com.mysql.jdbc.Driver”;<br>        String url=”jdbc:mysql://localhost:3306/studio?serverTimezone=UTC&amp;amp&amp;characterEncoding=utf-8”;<br>        String userName=”root”;<br>        String password=”898218”;<br><br>    更优的选择是，将配置信息以键值对的形式保存在一个properties文件中，通过读取该配置文件来获取配置信息<br><br>        Properties per=new Properties（）<br>        per.load()<br><br>3.反射注册driver，获取connect对象<br><br>    Class.forName(driver);<br>    Connect conn=DriverManager.getConnect(url,userName,password)<br><br><strong>注意 url：<br>需要增加serverTimezone=UTC&amp;amp&amp;characterEncoding=utf-8来设置时间和编码格式</strong><br><br><br><h2>2.使用Statement和Preparedstatement的区别</h2>
+<h2 id="2-使用statement和preparedstatement的区别"><a href="#2-使用statement和preparedstatement的区别" class="headerlink" title="2.使用statement和preparedstatement的区别"></a>2.使用statement和preparedstatement的区别</h2><h2>1.获取connetc连接</h2><br>1.    导入jdbc的jar包：<br>    创建lib文件夹，将jar包复制到lib文件中，设置中添加该jar包<br><br>2.    获取连接数据库的配置信息：<br><br>        String driver=”com.mysql.jdbc.Driver”;<br>        String url=”jdbc:mysql://localhost:3306/studio?serverTimezone=UTC&amp;amp&amp;characterEncoding=utf-8”;<br>        String userName=”root”;<br>        String password=”898218”;<br><br>    更优的选择是，将配置信息以键值对的形式保存在一个properties文件中，通过读取该配置文件来获取配置信息<br><br>        Properties per=new Properties（）<br>        per.load()<br><br>3.反射注册driver，获取connect对象<br><br>    Class.forName(driver);<br>    Connect conn=DriverManager.getConnect(url,userName,password)<br><br><strong>注意 url：<br>需要增加serverTimezone=UTC&amp;amp&amp;characterEncoding=utf-8来设置时间和编码格式</strong><br><br><br><h2>2.使用Statement和Preparedstatement的区别</h2>
 
 <p>2.1 获取Statement 对象，执行sql语句</p>
 <pre><code>Statement stm=conn.createStatement() 
