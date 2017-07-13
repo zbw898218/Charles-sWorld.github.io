@@ -176,7 +176,10 @@
 <p>2.DBCP开源连接池</p>
 <p>3.C3P0开源连接池</p>
 <hr>
-<h2 id="1-自定义一个连接池池类"><a href="#1-自定义一个连接池池类" class="headerlink" title="1.自定义一个连接池池类"></a><h1>1.自定义一个连接池池类</h1></h2><p>1.创建一个MyPool类：<br>声明 一个LinkedList 链表存储连接对象；</p>
+<h1>1.自定义一个连接池池类</h1>
+
+
+<p>1.创建一个MyPool类：<br>声明 一个LinkedList 链表存储连接对象；</p>
 <p>声明：int initSize/maxSize 属性，记录连接池初始数量和最大数量</p>
 <p>声明：int currentSize 属性，记录当前可用连接数</p>
 <p>2.使用静态块，在类加载的时候自动注册驱动</p>
@@ -269,7 +272,9 @@
 </code></pre><p>以上是自定义的一个简单的连接池类，已经具备了一个连接池的基础功能，还可以在此基础上继续增加更多自定义功能。</p>
 <h1>2.使用DBCP开源连接池</h1>
 
-<h2 id="DBCP连接池是开源组织Apache软件基金组织开发的连接池实现。事实上，tomcat服务器默认就会使用这个连接池道具。"><a href="#DBCP连接池是开源组织Apache软件基金组织开发的连接池实现。事实上，tomcat服务器默认就会使用这个连接池道具。" class="headerlink" title="DBCP连接池是开源组织Apache软件基金组织开发的连接池实现。事实上，tomcat服务器默认就会使用这个连接池道具。"></a><h4>DBCP连接池是开源组织Apache软件基金组织开发的连接池实现。事实上，tomcat服务器默认就会使用这个连接池道具。</h4></h2><p>使用步骤：</p>
+<h4>DBCP连接池是开源组织Apache软件基金组织开发的连接池实现。事实上，tomcat服务器默认就会使用这个连接池道具。</h4>
+
+<p>使用步骤：</p>
 <p>1.下载DBCPjar包，添加到项目中</p>
 <p>2.读取数据库连接配置信息：driver/url/userName/password</p>
 <p>3.创建 BasicDataSource 连接池对象，传入配置信息</p>
@@ -308,7 +313,9 @@
 
 }
 </code></pre><p></p><h1>3.使用C3P0开源数据连接池<h1><p></p>
-<h2 id="C3P0是一个开源组织的产品，开源框架的内部的连接池一般都使用C3P0来实现，例如：Hibernate"><a href="#C3P0是一个开源组织的产品，开源框架的内部的连接池一般都使用C3P0来实现，例如：Hibernate" class="headerlink" title="C3P0是一个开源组织的产品，开源框架的内部的连接池一般都使用C3P0来实现，例如：Hibernate"></a><h4>C3P0是一个开源组织的产品，开源框架的内部的连接池一般都使用C3P0来实现，例如：Hibernate</h4></h2><p>1.C3P0的用法和DBCP的用法非常的相似~照搬上面的用例即可</p>
+<h4>C3P0是一个开源组织的产品，开源框架的内部的连接池一般都使用C3P0来实现，例如：Hibernate</h4>
+
+<p>1.C3P0的用法和DBCP的用法非常的相似~照搬上面的用例即可</p>
 <p>2.特别的是C3PO读取参数文件的方式，C3P0除了能像DBCP那样读取配置文件，它还提供了一种特殊的设置参数的方式，就是把参数数据写在一个名叫c3p0-config.xml的XML文件中，在创建C3P0对象时会自动在classpath去寻找该文件来读取~<br> <strong><em>也就是说:c3p0会到classpath下读取名字为c3p0-config.xml文件</em></strong></p>
 <pre><code>public class C3P0Test {
     private static String driver=&quot;com.mysql.jdbc.Driver&quot;;
