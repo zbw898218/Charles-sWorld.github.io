@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://zbw898218.github.io">
-  <title>Tag: This blog is created by recording my journey for learning JAVA! I hope to be one of the best developer one day in the future! Good luck for me! | Charles Blog</title>
+  <title>三种实现JDBC连接池的方法 | Charles Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Charles Blog">
-<meta property="og:url" content="https://zbw898218.github.io/tags/This-blog-is-created-by-recording-my-journey-for-learning-JAVA-I-hope-to-be-one-of-the-best-developer-one-day-in-the-future-Good-luck-for-me/index.html">
+  <meta name="description" content="常见的3种连接池实现方法： 1.自定义 2.DBCP开源连接池 3.C3P0开源连接池  #1.自定义一个连接池池类 1.创建一个MyPool类：声明 一个LinkedList 链表存储连接对象； 声明：int initSize/maxSize 属性，记录连接池初始数量和最大数量 声明：int currentSize 属性，记录当前可用连接数 2.使用静态块，在类加载的时候自动注册驱动 3.定义一">
+<meta name="keywords" content="tags">
+<meta property="og:type" content="article">
+<meta property="og:title" content="三种实现JDBC连接池的方法">
+<meta property="og:url" content="https://zbw898218.github.io/2017/07/13/JDBCConnectPool/index.html">
 <meta property="og:site_name" content="Charles Blog">
+<meta property="og:description" content="常见的3种连接池实现方法： 1.自定义 2.DBCP开源连接池 3.C3P0开源连接池  #1.自定义一个连接池池类 1.创建一个MyPool类：声明 一个LinkedList 链表存储连接对象； 声明：int initSize/maxSize 属性，记录连接池初始数量和最大数量 声明：int currentSize 属性，记录当前可用连接数 2.使用静态块，在类加载的时候自动注册驱动 3.定义一">
+<meta property="og:updated_time" content="2017-07-13T14:09:32.754Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Charles Blog">
+<meta name="twitter:title" content="三种实现JDBC连接池的方法">
+<meta name="twitter:description" content="常见的3种连接池实现方法： 1.自定义 2.DBCP开源连接池 3.C3P0开源连接池  #1.自定义一个连接池池类 1.创建一个MyPool类：声明 一个LinkedList 链表存储连接对象； 声明：int initSize/maxSize 属性，记录连接池初始数量和最大数量 声明：int currentSize 属性，记录当前可用连接数 2.使用静态块，在类加载的时候自动注册驱动 3.定义一">
   
     <link rel="alternative" href="/atom.xml" title="Charles Blog" type="application/atom+xml">
   
@@ -149,60 +154,321 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-JDBCConnectPool" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/06/04/My-New-Post/" class="archive-article-date">
-  	<time datetime="2017-06-04T00:12:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-04</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/04/My-New-Post/">Charles World</a>
+    <h1 class="article-title" itemprop="name">
+      三种实现JDBC连接池的方法
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/07/13/JDBCConnectPool/" class="archive-article-date">
+  	<time datetime="2017-07-13T13:32:57.472Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>常见的3种连接池实现方法：</p>
+<p>1.自定义</p>
+<p>2.DBCP开源连接池</p>
+<p>3.C3P0开源连接池</p>
+<hr>
+<p>#1.自定义一个连接池池类</p>
+<p>1.创建一个MyPool类：<br>声明 一个LinkedList 链表存储连接对象；</p>
+<p>声明：int initSize/maxSize 属性，记录连接池初始数量和最大数量</p>
+<p>声明：int currentSize 属性，记录当前可用连接数</p>
+<p>2.使用静态块，在类加载的时候自动注册驱动</p>
+<p>3.定义一个无参构造函数，在构造时，初始化存储链表，存入initSize指定数量的可用连接</p>
+<p>4.定义一个 getConnect（） 方法，用以获取数据库连接对象，考虑到用户/线程使用完一个连接后，习惯性的调用close 方法关闭连接，无法做到重复利用，固在获取数据库连接时，采用动态代理方法，重写Connection接口的close方法，具体代码实现，请参照下方 MyPool类中getCon（）方法</p>
+<p>5.分别定义 从存储链表中获取连接的 getConnectFromPool() 方法 和 使用完毕释放连接的 releaseConnect() 方法</p>
+<pre><code>public class MyPool {
+    private static String driver=&quot;com.mysql.jdbc.Driver&quot;;
+    private static String url=&quot;jdbc:mysql://localhost:3306/studio?serverTimezone=UTC&amp;amp&amp;characterEncoding=utf-8&quot;;
+    private static String userName=&quot;root&quot;;
+    private static String password=&quot;898218&quot;;
+    private LinkedList&lt;Connection&gt; conList=new LinkedList&lt;&gt;();
+    private int initSize=3;
+    private int maxSize=5;
+    private int currentSize=0;//记录当前可用连接数
+
+    //加载的时候自动注册驱动
+    static {
+        try {
+            Class.forName(driver);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    public MyPool(){
+        for(int i=0;i&lt;initSize;i++){
+            conList.add(this.getCon());
+            currentSize++;
+        }
+    }
+    /**
+     * 获得连接方法
+     * @return
+     */
+    private Connection getCon(){
+            try {
+                final Connection con=DriverManager.getConnection(url,userName,password);
+                //动态代理，重写close方法
+                Connection myCon=(Connection) Proxy.newProxyInstance(
+                        MyPool.class.getClassLoader(),//类加载器，只要在同一个JDK中的类即可
+                        new Class[]{Connection.class},//要代理的接口的集合
+                        //编写一个方法处理器
+                        new InvocationHandler(){
+                            @Override
+                            public Object invoke(Object proxy, Method method, Object[] args)
+                                    throws Throwable {
+                                Object value=null;
+                                //当遇到close方法，就会把对象放回连接池中，而不是关闭连接
+                                if(method.getName().equals(&quot;close&quot;)){
+                                    conList.addLast(con);
+                                }else{
+                                    value=method.invoke(con,args);
+                                }
+                                return value;
+                            }
+                        }
+                );
+                return myCon;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
+    }
+    /**
+     * 从连接池中获取连接
+     */
+    public Connection getConFormPool(){
+        Connection connection=null;
+        if(conList.size()&gt;0){
+            connection=conList.removeFirst();
+        }else if(conList.size()==0&amp;&amp;currentSize&lt;maxSize){
+            //连接池被拿空，且连接数没有达到上限，创建新的连接
+            conList.addLast(this.getCon());
+            currentSize++;
+            connection=conList.removeFirst();
+        }else{
+            System.out.println(&quot;抱歉！&quot;);
+        }
+
+        return connection;
+    }
+    /**
+     * 释放连接
+     * @param con
+     */
+    public void releaseCon(Connection con){
+        conList.addLast(con);
+    }
+}
+</code></pre><p>以上是自定义的一个简单的连接池类，已经具备了一个连接池的基础功能，还可以在此基础上继续增加更多自定义功能。</p>
+<h2 id="2-使用DBCP开源连接池"><a href="#2-使用DBCP开源连接池" class="headerlink" title="#2.使用DBCP开源连接池"></a>#2.使用DBCP开源连接池</h2><p>####DBCP连接池是开源组织Apache软件基金组织开发的连接池实现。事实上，tomcat服务器默认就会使用这个连接池道具。</p>
+<p>使用步骤：</p>
+<p>1.下载DBCPjar包，添加到项目中</p>
+<p>2.读取数据库连接配置信息：driver/url/userName/password</p>
+<p>3.创建 BasicDataSource 连接池对象，传入配置信息</p>
+<p>4.需要使用连接时，通过创建的连接池对象，调用 getConnection()方法，获取数据库连接对象，用完需要释放时，直接 close 即可</p>
+<pre><code>public class DBCPTest {
+    private static String driver=&quot;com.mysql.jdbc.Driver&quot;;
+    private static String userName=&quot;root&quot;;
+    private static String password=&quot;898218&quot;;
+    public static void main(String[] args){
+        //获得连接池对象
+        BasicDataSource bs=new BasicDataSource();
+        bs.setUrl(&quot;jdbc:mysql://localhost:3306/studio?serverTimezone=UTC&amp;amp&amp;characterEncoding=utf-8&quot;);
+        bs.setUsername(userName);
+        bs.setPassword(password);
+        bs.setDriverClassName(driver);
+
+        bs.setInitialSize(3);
+        bs.setMaxActive(5);
+        bs.setMaxWait(1000);//设置最大等待时间，单位毫秒
+        //待到结束都没有连接被释放回连接池，就会出现报错。
+        for(int i = 0 ; i&lt;9;i++)
+        {
+            Connection conn = null;
+            try {
+                conn = bs.getConnection();
+                System.out.println(conn.hashCode());
+                if(i==5)
+                {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+}
+</code></pre><p>#3.使用C3P0开源数据连接池</p>
+<p>####C3P0是一个开源组织的产品，开源框架的内部的连接池一般都使用C3P0来实现，例如：Hibernate</p>
+<p>1.C3P0的用法和DBCP的用法非常的相似~照搬上面的用例即可</p>
+<p>2.特别的是C3PO读取参数文件的方式，C3P0除了能像DBCP那样读取配置文件，它还提供了一种特殊的设置参数的方式，就是把参数数据写在一个名叫c3p0-config.xml的XML文件中，在创建C3P0对象时会自动在classpath去寻找该文件来读取~<br> <strong><em>也就是说:c3p0会到classpath下读取名字为c3p0-config.xml文件</em></strong></p>
+<pre><code>public class C3P0Test {
+    private static String driver=&quot;com.mysql.jdbc.Driver&quot;;
+    private static String url=&quot;jdbc:mysql://localhost:3306/studio?serverTimezone=UTC&amp;amp&amp;characterEncoding=utf-8&quot;;
+    private static String userName=&quot;root&quot;;
+    private static String password=&quot;898218&quot;;
+    public static void main(String[] args){
+        ComboPooledDataSource cds=new ComboPooledDataSource();
+        //设置参数
+        cds.setJdbcUrl(url);
+        cds.setUser(userName);
+        cds.setPassword(password);
+        try {
+            cds.setDriverClass(driver);
+        } catch (PropertyVetoException e) {
+            e.printStackTrace();
+        }
+        //设置连接池的参数
+        cds.setInitialPoolSize(3);
+        cds.setMaxPoolSize(5);
+        cds.setCheckoutTimeout(1000);//最大等待时间
+        for(int i = 0 ; i&lt;8 ; i++)
+        {
+            Connection conn = null;
+            try {
+                conn = cds.getConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            System.out.println(conn.hashCode());
+        }
+    }
+}
+</code></pre>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">This blog is created by recording my journey for learning JAVA! I hope to be one of the best developer one day in the future! Good luck for me!</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">tags</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://zbw898218.github.io/2017/07/13/JDBCConnectPool/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2017/07/09/JDBC/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JAVA使用JDBC连接数据库的心得</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+  
+  
   
 
-    
+  
+
+  
 
 
           </div>
@@ -225,9 +491,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		root: "/",
