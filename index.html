@@ -411,29 +411,10 @@
         <p>学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面：</p>
 <p>1.获取connect连接</p>
 <p>2.使用statement和preparedstatement的区别</p>
-<hr>
-<h2>1.获取connect连接</h2><br>1.1    导入jdbc的jar包：<br>创建lib文件夹，将jar包复制到lib文件中，设置中添加该jar包<br><br>1.2    获取连接数据库的配置信息：<br><br>        String driver=”com.mysql.jdbc.Driver”;<br>        String url=”jdbc:mysql://localhost:3306/studio?serverTimezone=UTC&amp;amp&amp;characterEncoding=utf-8”;<br>        String userName=”root”;<br>        String password=”898218”;<br>        …<br><br>更优的选择是，将配置信息以键值对的形式保存在一个properties文件中，通过读取该配置文件来获取配置信息<br><br>        Properties per=new Properties（）<br>        per.load()<br>        …<br><br>1.3 反射注册driver，获取connect对象<br><br>        Class.forName(driver);<br>        Connect conn=DriverManager.getConnect(url,userName,password)<br>        …<br><br><strong>注意 url：<br>需要增加serverTimezone=UTC&amp;amp&amp;characterEncoding=utf-8来设置时间和编码格式</strong><br><br><br><h2>2.使用Statement和Preparedstatement的区别</h2>
-
-<p>2.1 获取Statement 对象，执行sql语句</p>
-<pre><code>Statement stm=conn.createStatement() 
-ResultSet rst=stm.executeQuery(sql)//查询
-stm.executeUpdate(sql,int[] columnIndexes)//更新
-...
-</code></pre><p>2.2 获取PreparedStatement</p>
-<pre><code>PreparedStatement pstm=conn.prepareStatement(sql)
-pstm.setInt(1,int值)
-pstm.setString(2，String值)
-...
-pstm.addBatch();
-
-pstm.executeBatch();//执行
-</code></pre><p>**注意：</p>
-<pre><code>1.    使用PreparedStatement时，conn.setAutoCommit(false)，将自动提交关闭**
-</code></pre><p><strong>2.3 区别</strong></p>
-<p>1    PreparedStatement是预编译的,对于批量处理可以大大提高效率.也叫JDBC存储过程</p>
-<p>2    使用 Statement 对象。在对数据库只执行一次性存取的时侯，用Statement 对象进行处理。PreparedStatement对象的开销比Statement大，对于一次性操作并不会带来额外的好处。</p>
-<p>3    statement每次执行sql语句，相关数据库都要执行sql语句的编译，preparedstatement是预编译得,preparedstatement支    持批处理</p>
-
+<h2 id=""><a href="#" class="headerlink" title=""></a>
+        
+          <a class="article-more-a" href="/2017/07/09/JDBC/#more">more >></a>
+        
       
 
       
