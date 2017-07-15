@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="https://zbw898218.github.io">
   <title>三种实现JDBC连接池的方法 | Charles Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="常见的3种连接池实现方法： 1.自定义 2.DBCP开源连接池 3.C3P0开源连接池  1.自定义一个连接池池类   1.创建一个MyPool类： 声明： 一个LinkedList 链表存储连接对象； 声明：int initSize/maxSize 属性，记录连接池初始数量和最大数量 声明：int currentSize 属性，记录当前可用连接数 2.使用静态块，在类加载的时候自动注册驱动 3.">
+  <meta name="description" content="常见的3种连接池实现方法： 1.自定义 2.DBCP开源连接池 3.C3P0开源连接池">
 <meta name="keywords" content="tags">
 <meta property="og:type" content="article">
 <meta property="og:title" content="三种实现JDBC连接池的方法">
 <meta property="og:url" content="https://zbw898218.github.io/2017/07/13/JDBCConnectPool/index.html">
 <meta property="og:site_name" content="Charles Blog">
-<meta property="og:description" content="常见的3种连接池实现方法： 1.自定义 2.DBCP开源连接池 3.C3P0开源连接池  1.自定义一个连接池池类   1.创建一个MyPool类： 声明： 一个LinkedList 链表存储连接对象； 声明：int initSize/maxSize 属性，记录连接池初始数量和最大数量 声明：int currentSize 属性，记录当前可用连接数 2.使用静态块，在类加载的时候自动注册驱动 3.">
-<meta property="og:updated_time" content="2017-07-13T14:17:18.240Z">
+<meta property="og:description" content="常见的3种连接池实现方法： 1.自定义 2.DBCP开源连接池 3.C3P0开源连接池">
+<meta property="og:updated_time" content="2017-07-15T03:23:08.637Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="三种实现JDBC连接池的方法">
-<meta name="twitter:description" content="常见的3种连接池实现方法： 1.自定义 2.DBCP开源连接池 3.C3P0开源连接池  1.自定义一个连接池池类   1.创建一个MyPool类： 声明： 一个LinkedList 链表存储连接对象； 声明：int initSize/maxSize 属性，记录连接池初始数量和最大数量 声明：int currentSize 属性，记录当前可用连接数 2.使用静态块，在类加载的时候自动注册驱动 3.">
+<meta name="twitter:description" content="常见的3种连接池实现方法： 1.自定义 2.DBCP开源连接池 3.C3P0开源连接池">
   
     <link rel="alternative" href="/atom.xml" title="Charles Blog" type="application/atom+xml">
   
@@ -179,6 +179,7 @@
 <p>2.DBCP开源连接池</p>
 <p>3.C3P0开源连接池</p>
 <hr>
+<a id="more"></a>
 <h1>1.自定义一个连接池池类</h1>
 
 
