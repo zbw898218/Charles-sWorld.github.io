@@ -6,19 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://zbw898218.github.io">
-  <title>JAVA使用JDBC连接数据库的心得 | Charles Zheng的博客</title>
+  <title>Tag: JAVA常用功能 | Charles Zheng的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面： 1.获取connect连接 2.使用statement和preparedstatement的区别">
-<meta name="keywords" content="JDBC,JAVA开发">
-<meta property="og:type" content="article">
-<meta property="og:title" content="JAVA使用JDBC连接数据库的心得">
-<meta property="og:url" content="https://zbw898218.github.io/2017/07/09/JDBC/index.html">
+  <meta name="description" content="记录自己的学习成长经历">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Charles Zheng的博客">
+<meta property="og:url" content="https://zbw898218.github.io/tags/JAVA常用功能/index.html">
 <meta property="og:site_name" content="Charles Zheng的博客">
-<meta property="og:description" content="学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面： 1.获取connect连接 2.使用statement和preparedstatement的区别">
-<meta property="og:updated_time" content="2017-07-15T05:05:09.306Z">
+<meta property="og:description" content="记录自己的学习成长经历">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JAVA使用JDBC连接数据库的心得">
-<meta name="twitter:description" content="学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面： 1.获取connect连接 2.使用statement和preparedstatement的区别">
+<meta name="twitter:title" content="Charles Zheng的博客">
+<meta name="twitter:description" content="记录自己的学习成长经历">
   
     <link rel="alternative" href="/atom.xml" title="Charles Zheng的博客" type="application/atom+xml">
   
@@ -158,210 +156,64 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-JDBC" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      JAVA使用JDBC连接数据库的心得
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/07/22/XML大总结/" class="archive-article-date">
+  	<time datetime="2017-07-22T14:43:47.900Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/07/22/XML大总结/">XML的使用总结</a>
     </h1>
   
 
-        
-        <a href="/2017/07/09/JDBC/" class="archive-article-date">
-  	<time datetime="2017-07-09T11:47:24.678Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面：</p>
-<p>1.获取connect连接</p>
-<p>2.使用statement和preparedstatement的区别<br><a id="more"></a></p>
-<h1>1.获取connect连接</h1>
-
-<p>1.1    导入jdbc的jar包：<br>创建lib文件夹，将jar包复制到lib文件中，设置中添加该jar包</p>
-<p>1.2    获取连接数据库的配置信息：</p>
-<pre><code>String driver=&quot;com.mysql.jdbc.Driver&quot;;
-String url=&quot;jdbc:mysql://localhost:3306/studio?serverTimezone=UTC&amp;amp&amp;characterEncoding=utf-8&quot;;
-String userName=&quot;root&quot;;
-String password=&quot;898218&quot;;
-...
-</code></pre><p>更优的选择是，将配置信息以键值对的形式保存在一个properties文件中，通过读取该配置文件来获取配置信息</p>
-<pre><code>Properties per=new Properties（）
-per.load()
-...
-</code></pre><p>1.3 反射注册driver，获取connect对象</p>
-<pre><code>Class.forName(driver);
-Connect conn=DriverManager.getConnect(url,userName,password)
-...
-</code></pre><p><strong>注意 url：<br>需要增加serverTimezone=UTC&amp;amp&amp;characterEncoding=utf-8来设置时间和编码格式</strong></p>
-<h1>2.使用Statement和Preparedstatement的区别</h1>
-
-
-<p>2.1 获取Statement 对象，执行sql语句</p>
-<pre><code>Statement stm=conn.createStatement() 
-ResultSet rst=stm.executeQuery(sql)//查询
-stm.executeUpdate(sql,int[] columnIndexes)//更新
-...
-</code></pre><p>2.2 获取PreparedStatement</p>
-<pre><code>PreparedStatement pstm=conn.prepareStatement(sql)
-pstm.setInt(1,int值)
-pstm.setString(2，String值)
-...
-pstm.addBatch();
-
-pstm.executeBatch();//执行
-</code></pre><p>**注意：</p>
-<pre><code>1.    使用PreparedStatement时，conn.setAutoCommit(false)，将自动提交关闭**
-</code></pre><p><strong>2.3 区别</strong></p>
-<p>1    PreparedStatement是预编译的,对于批量处理可以大大提高效率.也叫JDBC存储过程</p>
-<p>2    使用 Statement 对象。在对数据库只执行一次性存取的时侯，用Statement 对象进行处理。PreparedStatement对象的开销比Statement大，对于一次性操作并不会带来额外的好处。</p>
-<p>3    statement每次执行sql语句，相关数据库都要执行sql语句的编译，preparedstatement是预编译得,preparedstatement支    持批处理</p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="https://zbw898218.github.io/photos/alipay.jpg">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JDBC</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JAVA开发</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JAVA开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JAVA常用功能</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://zbw898218.github.io/2017/07/09/JDBC/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2017/07/13/JDBCConnectPool/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          三种实现JDBC连接池的方法
-        
-      </div>
-    </a>
   
   
-    <a href="/2017/06/04/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
+    
 
 
           </div>
@@ -384,9 +236,9 @@ pstm.executeBatch();//执行
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		root: "/",

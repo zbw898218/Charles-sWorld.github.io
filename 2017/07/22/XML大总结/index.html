@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://zbw898218.github.io">
-  <title>JAVA使用JDBC连接数据库的心得 | Charles Zheng的博客</title>
+  <title>XML的使用总结 | Charles Zheng的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面： 1.获取connect连接 2.使用statement和preparedstatement的区别">
-<meta name="keywords" content="JDBC,JAVA开发">
+  <meta name="description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。">
+<meta name="keywords" content="JAVA开发,JAVA常用功能">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JAVA使用JDBC连接数据库的心得">
-<meta property="og:url" content="https://zbw898218.github.io/2017/07/09/JDBC/index.html">
+<meta property="og:title" content="XML的使用总结">
+<meta property="og:url" content="https://zbw898218.github.io/2017/07/22/XML大总结/index.html">
 <meta property="og:site_name" content="Charles Zheng的博客">
-<meta property="og:description" content="学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面： 1.获取connect连接 2.使用statement和preparedstatement的区别">
-<meta property="og:updated_time" content="2017-07-15T05:05:09.306Z">
+<meta property="og:description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。">
+<meta property="og:updated_time" content="2017-07-22T14:43:00.982Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JAVA使用JDBC连接数据库的心得">
-<meta name="twitter:description" content="学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面： 1.获取connect连接 2.使用statement和preparedstatement的区别">
+<meta name="twitter:title" content="XML的使用总结">
+<meta name="twitter:description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。">
   
     <link rel="alternative" href="/atom.xml" title="Charles Zheng的博客" type="application/atom+xml">
   
@@ -158,69 +158,101 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-JDBC" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-XML大总结" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      JAVA使用JDBC连接数据库的心得
+      XML的使用总结
     </h1>
   
 
         
-        <a href="/2017/07/09/JDBC/" class="archive-article-date">
-  	<time datetime="2017-07-09T11:47:24.678Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-09</time>
+        <a href="/2017/07/22/XML大总结/" class="archive-article-date">
+  	<time datetime="2017-07-22T14:43:47.900Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>学习jdbc一段时间后，我希望借这篇文章来归纳总结一些使用心得，分为二个方面：</p>
-<p>1.获取connect连接</p>
-<p>2.使用statement和preparedstatement的区别<br><a id="more"></a></p>
-<h1>1.获取connect连接</h1>
+        <p>JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。<br><a id="more"></a></p>
+<p>#1.XML的简介#<br>XML:EXtensible Markup Language/可扩展标记语言</p>
+<p>按照我自己的理解，就是一个类似html的标签语言，通过自定义各种成对的标签，来记录相关数据并最终形成XML文件来保存数据以便长期使用。<br>（注：本文所有代码实例为简单起见，异常全部做抛出处理，敬请见谅！）</p>
+<p>#2.使用DOM方法存取XML文件#</p>
+<p>流程：<br>a.创建一个document对象，设置好了xml内容;</p>
+<p>b.将document转化成source对象；</p>
+<p>c.创建outputStream对象，将outputStream对象作为参数，构造一个StreamResult对象；</p>
+<p>d.创建一个Transformer对象，调用transform方法，将source对象翻译转化成Result对象，串联起来一个完整输出流。</p>
+<pre><code>import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Result;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.*;
 
-<p>1.1    导入jdbc的jar包：<br>创建lib文件夹，将jar包复制到lib文件中，设置中添加该jar包</p>
-<p>1.2    获取连接数据库的配置信息：</p>
-<pre><code>String driver=&quot;com.mysql.jdbc.Driver&quot;;
-String url=&quot;jdbc:mysql://localhost:3306/studio?serverTimezone=UTC&amp;amp&amp;characterEncoding=utf-8&quot;;
-String userName=&quot;root&quot;;
-String password=&quot;898218&quot;;
-...
-</code></pre><p>更优的选择是，将配置信息以键值对的形式保存在一个properties文件中，通过读取该配置文件来获取配置信息</p>
-<pre><code>Properties per=new Properties（）
-per.load()
-...
-</code></pre><p>1.3 反射注册driver，获取connect对象</p>
-<pre><code>Class.forName(driver);
-Connect conn=DriverManager.getConnect(url,userName,password)
-...
-</code></pre><p><strong>注意 url：<br>需要增加serverTimezone=UTC&amp;amp&amp;characterEncoding=utf-8来设置时间和编码格式</strong></p>
-<h1>2.使用Statement和Preparedstatement的区别</h1>
+/**
+ * 使用dom创建一个xml文件
+ * 存储一些简单数据
+ * Created by chaersi on 2017/7/22.
+ */
+public class Dom_xml {
+    public static void main(String args[]) throws Exception {
+        //创建一个doc构造工厂实例
+        DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
+        //创建一个doc构造实例
+        DocumentBuilder builder=factory.newDocumentBuilder();
+        //创建一个Document 的实例
+        Document document=builder.newDocument();
+        //创建一个根节点
+        /**&lt;?version=1.0?&gt;
+         * &lt;rootaddr&gt;
+         *     &lt;name id=&quot;username&quot;&gt;&lt;/name&gt;
+         *     &lt;age&gt;&lt;/age&gt;
+         *     &lt;emale&gt;&lt;/emale&gt;
+         * &lt;/rootaddr&gt;
+         */
+        //创建各个节点
+        Element root=document.createElement(&quot;rootaddr&quot;);
+        Element name=document.createElement(&quot;name&quot;);
+        Element age=document.createElement(&quot;age&quot;);
+        Element email=document.createElement(&quot;email&quot;);
+        //设置节点内容和属性
+        root.setAttribute(&quot;id&quot;,&quot;username&quot;);
+        name.setTextContent(&quot;Charles Zheng&quot;);
+        age.setTextContent(&quot;25&quot;);
+        email.setTextContent(&quot;846743326@qq.com&quot;);
+        //设置节点父子关系
+        document.appendChild(root);
+        root.appendChild(name);
+        root.appendChild(age);
+        root.appendChild(email);
 
+        //获取输出流对象
+        OutputStream or=new FileOutputStream(new File(&quot;myxml_demo.xml&quot;));
 
-<p>2.1 获取Statement 对象，执行sql语句</p>
-<pre><code>Statement stm=conn.createStatement() 
-ResultSet rst=stm.executeQuery(sql)//查询
-stm.executeUpdate(sql,int[] columnIndexes)//更新
-...
-</code></pre><p>2.2 获取PreparedStatement</p>
-<pre><code>PreparedStatement pstm=conn.prepareStatement(sql)
-pstm.setInt(1,int值)
-pstm.setString(2，String值)
-...
-pstm.addBatch();
+        //获取输出流result对象
+        Result result=new StreamResult(or);
 
-pstm.executeBatch();//执行
-</code></pre><p>**注意：</p>
-<pre><code>1.    使用PreparedStatement时，conn.setAutoCommit(false)，将自动提交关闭**
-</code></pre><p><strong>2.3 区别</strong></p>
-<p>1    PreparedStatement是预编译的,对于批量处理可以大大提高效率.也叫JDBC存储过程</p>
-<p>2    使用 Statement 对象。在对数据库只执行一次性存取的时侯，用Statement 对象进行处理。PreparedStatement对象的开销比Statement大，对于一次性操作并不会带来额外的好处。</p>
-<p>3    statement每次执行sql语句，相关数据库都要执行sql语句的编译，preparedstatement是预编译得,preparedstatement支    持批处理</p>
+        //将dom树转化成source对象
+        DOMSource source=new DOMSource(document);
+
+        //获取transformer对象，将source对象转翻译成result对象
+        TransformerFactory fc=TransformerFactory.newInstance();
+        Transformer transformer= fc.newTransformer();
+        transformer.transform(source,result);
+    }
+}
+</code></pre><p>#3.使用SAL方法存取XML文件#</p>
+<p>#4.XML与Properties之间相互转化#</p>
+<p>#5.使用JDOM#</p>
+<p>#6.使用DOM4J#</p>
 
       
 
@@ -260,11 +292,11 @@ pstm.executeBatch();//执行
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JDBC</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JAVA开发</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JAVA开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JAVA常用功能</a>
         		</li>
       		
 		</ul>
@@ -320,7 +352,7 @@ pstm.executeBatch();//执行
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://zbw898218.github.io/2017/07/09/JDBC/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://zbw898218.github.io/2017/07/22/XML大总结/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -334,18 +366,9 @@ pstm.executeBatch();//执行
   
 <nav id="article-nav">
   
-    <a href="/2017/07/13/JDBCConnectPool/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          三种实现JDBC连接池的方法
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/06/04/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2017/07/15/set_static_IP_Linux/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">虚拟机Linux的静态IP设置</div>
       <i class="icon-circle-right"></i>
     </a>
   
