@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://zbw898218.github.io/2017/07/22/XML大总结/index.html">
 <meta property="og:site_name" content="Charles Zheng的博客">
 <meta property="og:description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。">
-<meta property="og:updated_time" content="2017-07-23T06:59:17.097Z">
+<meta property="og:updated_time" content="2017-07-23T07:25:59.700Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XML的使用总结">
 <meta name="twitter:description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。">
@@ -405,7 +405,44 @@ public class Sax_xml {
 
     }
 }
-</code></pre><h1 id="4-XML与Properties之间相互转化"><a href="#4-XML与Properties之间相互转化" class="headerlink" title="4.XML与Properties之间相互转化"></a><a id="fir4" href="#fir">4.XML与Properties之间相互转化</a></h1><h1 id="5-使用JDOM"><a href="#5-使用JDOM" class="headerlink" title="5.使用JDOM"></a><a id="fir5" href="#fir">5.使用JDOM</a></h1><h1 id="6-使用DOM4J"><a href="#6-使用DOM4J" class="headerlink" title="6.使用DOM4J"></a><a id="fir6" href="#fir">6.使用DOM4J</a></h1>
+</code></pre><h1 id="4-XML与Properties之间相互转化"><a href="#4-XML与Properties之间相互转化" class="headerlink" title="4.XML与Properties之间相互转化"></a><a id="fir4" href="#fir">4.XML与Properties之间相互转化</a></h1><h3 id="4-1-将Properties文件转换成一个XML文件"><a href="#4-1-将Properties文件转换成一个XML文件" class="headerlink" title="4.1 将Properties文件转换成一个XML文件"></a>4.1 将Properties文件转换成一个XML文件</h3><p>a.读取一个Properties文件</p>
+<p>b.转换成XML文件</p>
+<pre><code>import java.io.*;
+import java.util.Properties;
+
+/**
+ * Created by chaersi on 2017/7/23.
+ */
+public class PropertiesToXML {
+    public static void main(String[] args) throws Exception{
+        Properties pro=new Properties();
+        InputStream is=new FileInputStream(new File(&quot;myxml_demo.properties&quot;));
+        pro.load(is);
+        OutputStream os=new FileOutputStream(new File(&quot;ProToXML.xml&quot;));
+        pro.storeToXML(os,null);
+    }
+}
+</code></pre><h3 id="4-2-将XML文件转换成一个Properties文件"><a href="#4-2-将XML文件转换成一个Properties文件" class="headerlink" title="4.2 将XML文件转换成一个Properties文件"></a>4.2 将XML文件转换成一个Properties文件</h3><p>a.创建一个Properties对象</p>
+<p>b.依据XML文件创建一个InputStream流对象， 使用上一步创建的Properties对象，调用loadFromXML（InputStream in）读取XML文件内容，<strong></strong></p>
+<p>（注：读取的xml文件必须要有声明：&lt;!DOCTYPE properties SYSTEM “<a href="http://java.sun.com/dtd/properties.dtd&quot;&gt;" target="_blank" rel="external">http://java.sun.com/dtd/properties.dtd&quot;&gt;</a> ）</p>
+<p>c.调用Properties对象的store（）方法，将读取的xml信息输出到指定Properties文件中</p>
+<pre><code>import java.io.*;
+import java.util.Properties;
+
+/**
+ * 将xml文件转换成properties文件
+ * Created by chaersi on 2017/7/23.
+ */
+public class XmlToProperties {
+    public static void main(String[] args) throws Exception{
+        Properties myPro=new Properties();
+        InputStream is=new FileInputStream(new File(&quot;XMLToPro.xml&quot;));
+        myPro.loadFromXML(is);
+        OutputStream os=new FileOutputStream(new File(&quot;myxml_demo1.properties&quot;));
+        myPro.store(os,null);
+    }
+}
+</code></pre><h1 id="5-使用JDOM"><a href="#5-使用JDOM" class="headerlink" title="5.使用JDOM"></a><a id="fir5" href="#fir">5.使用JDOM</a></h1><h1 id="6-使用DOM4J"><a href="#6-使用DOM4J" class="headerlink" title="6.使用DOM4J"></a><a id="fir6" href="#fir">6.使用DOM4J</a></h1>
       
 
       
@@ -661,11 +698,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hexo操作简介</a>
+                <a href="javascript:void(0)" class="js-tag color3">Linux杂记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Linux杂记</a>
+                <a href="javascript:void(0)" class="js-tag color4">hexo操作简介</a>
               </li>
             
             <div class="clearfix"></div>
