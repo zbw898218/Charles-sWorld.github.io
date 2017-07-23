@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://zbw898218.github.io/2017/07/22/XML大总结/index.html">
 <meta property="og:site_name" content="Charles Zheng的博客">
 <meta property="og:description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。 W3C本身提供的XML：DOM和SAX，DOM:特点可以修改，不能读取大文件，SAX:可以读取大文件，但是不能修改 实际开发中会使用一些开源项目来简化开发难度。本文主要介绍两种 JDOM、DOM4J。">
-<meta property="og:updated_time" content="2017-07-23T09:40:14.104Z">
+<meta property="og:updated_time" content="2017-07-23T09:43:06.211Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XML的使用总结">
 <meta name="twitter:description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。 W3C本身提供的XML：DOM和SAX，DOM:特点可以修改，不能读取大文件，SAX:可以读取大文件，但是不能修改 实际开发中会使用一些开源项目来简化开发难度。本文主要介绍两种 JDOM、DOM4J。">
@@ -500,7 +500,7 @@ public class JDom_demo {
         out.output(doc,new FileOutputStream(new File(&quot;JDom_demo.xml&quot;)));
     }
 }
-</code></pre><h3 id="5-1-JDOM读取XML文件"><a href="#5-1-JDOM读取XML文件" class="headerlink" title="5.1 JDOM读取XML文件"></a>5.1 JDOM读取XML文件</h3><p>流程：</p>
+</code></pre><h3 id="5-2-JDOM读取XML文件"><a href="#5-2-JDOM读取XML文件" class="headerlink" title="5.2 JDOM读取XML文件"></a>5.2 JDOM读取XML文件</h3><p>流程：</p>
 <p>a.创建一个基于sax的解析器对象builder</p>
 <p>b.利用上一步获取的builder对象调取build方法解析xml源文件，获取document对象</p>
 <p>c.获取根节点，根据根节点获取要输出的节点对象集合，循环输出元素内容</p>
@@ -869,15 +869,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">hexo操作简介</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">JAVA常用功能</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Linux杂记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hexo操作简介</a>
               </li>
             
             <div class="clearfix"></div>
