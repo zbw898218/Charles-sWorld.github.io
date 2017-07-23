@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://zbw898218.github.io/2017/07/22/XML大总结/index.html">
 <meta property="og:site_name" content="Charles Zheng的博客">
 <meta property="og:description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。">
-<meta property="og:updated_time" content="2017-07-23T06:54:04.329Z">
+<meta property="og:updated_time" content="2017-07-23T06:59:17.097Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XML的使用总结">
 <meta name="twitter:description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。">
@@ -188,7 +188,7 @@
 <p><a href="#fir6">6.使用DOM4J</a></p>
 <h1 id="1-XML的简介"><a href="#1-XML的简介" class="headerlink" title="1.XML的简介"></a><a id="fir1" href="#fir">1.XML的简介</a></h1><p>XML:EXtensible Markup Language/可扩展标记语言</p>
 <p>按照我自己的理解，就是一个类似html的标签语言，通过自定义各种成对的标签，来记录相关数据并最终形成XML文件来保存数据以便长期使用。<br>（注：本文所有代码实例为简单起见，异常全部做抛出处理，敬请见谅！）</p>
-<h1 id="2-使用DOM方法存取XML文件"><a href="#2-使用DOM方法存取XML文件" class="headerlink" title="2.使用DOM方法存取XML文件"></a><a id="fir2" href="#fir">2.使用DOM方法存取XML文件</a></h1><h3 id="2-1创建并输出XML文件流程："><a href="#2-1创建并输出XML文件流程：" class="headerlink" title="2.1创建并输出XML文件流程："></a>2.1创建并输出XML文件流程：</h3><p>a.创建一个document对象，设置好了xml内容;</p>
+<h1 id="2-使用DOM方法存取XML文件"><a href="#2-使用DOM方法存取XML文件" class="headerlink" title="2.使用DOM方法存取XML文件"></a><a id="fir2" href="#fir">2.使用DOM方法存取XML文件</a></h1><h3 id="2-1-DOM创建并输出XML文件流程："><a href="#2-1-DOM创建并输出XML文件流程：" class="headerlink" title="2.1 DOM创建并输出XML文件流程："></a>2.1 DOM创建并输出XML文件流程：</h3><p>a.创建一个document对象，设置好了xml内容;</p>
 <p>b.将document转化成source对象；</p>
 <p>c.创建outputStream对象，将outputStream对象作为参数，构造一个StreamResult对象；</p>
 <p>d.创建一个Transformer对象，调用transform方法，将source对象翻译转化成Result对象，串联起来一个完整输出流。</p>
@@ -278,7 +278,7 @@ public class Dom_xml {
         transformer.transform(source,result);
     }
 }
-</code></pre><h3 id="2-2读取并打印XML文件流程："><a href="#2-2读取并打印XML文件流程：" class="headerlink" title="2.2读取并打印XML文件流程："></a>2.2读取并打印XML文件流程：</h3><p>a.将要读取的xml文件作为参数，创建一个document对象;</p>
+</code></pre><h3 id="2-2-DOM读取并打印XML文件流程："><a href="#2-2-DOM读取并打印XML文件流程：" class="headerlink" title="2.2 DOM读取并打印XML文件流程："></a>2.2 DOM读取并打印XML文件流程：</h3><p>a.将要读取的xml文件作为参数，创建一个document对象;</p>
 <p>b.获取要读取的节点集合NodeList</p>
 <p>c.使用NodeList的getLength（）和getItem（）方法遍历节点，打印输出读取的数据</p>
 <pre><code>import org.w3c.dom.Document;
@@ -313,7 +313,7 @@ public class Dom_xml1 {
         }
     }
 }
-</code></pre><h1 id="3-使用SAL方法存取XML文件"><a href="#3-使用SAL方法存取XML文件" class="headerlink" title="3.使用SAL方法存取XML文件"></a><a id="fir3" href="#fir">3.使用SAL方法存取XML文件</a></h1><h3 id="3-1SAX读取XML文件并打印输出"><a href="#3-1SAX读取XML文件并打印输出" class="headerlink" title="3.1SAX读取XML文件并打印输出"></a>3.1SAX读取XML文件并打印输出</h3><p>a.自定义一个xml解析器类继承XMLReaderAdapter；</p>
+</code></pre><h1 id="3-使用SAL方法读取XML文件"><a href="#3-使用SAL方法读取XML文件" class="headerlink" title="3.使用SAL方法读取XML文件"></a><a id="fir3" href="#fir">3.使用SAL方法读取XML文件</a></h1><p>a.自定义一个xml解析器类继承XMLReaderAdapter；</p>
 <pre><code>import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
