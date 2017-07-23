@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://zbw898218.github.io/2017/07/22/XML大总结/index.html">
 <meta property="og:site_name" content="Charles Zheng的博客">
 <meta property="og:description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。">
-<meta property="og:updated_time" content="2017-07-23T02:15:27.980Z">
+<meta property="og:updated_time" content="2017-07-23T05:07:00.653Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XML的使用总结">
 <meta name="twitter:description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。">
@@ -188,7 +188,7 @@
 <p><a href="#fir6">6.使用DOM4J</a></p>
 <h1 id="1-XML的简介"><a href="#1-XML的简介" class="headerlink" title="1.XML的简介"></a><a id="fir1" name="fir1">1.XML的简介</a></h1><p>XML:EXtensible Markup Language/可扩展标记语言</p>
 <p>按照我自己的理解，就是一个类似html的标签语言，通过自定义各种成对的标签，来记录相关数据并最终形成XML文件来保存数据以便长期使用。<br>（注：本文所有代码实例为简单起见，异常全部做抛出处理，敬请见谅！）</p>
-<h1 id="2-使用DOM方法存取XML文件"><a href="#2-使用DOM方法存取XML文件" class="headerlink" title="2.使用DOM方法存取XML文件"></a><a id="fir2">2.使用DOM方法存取XML文件</a></h1><p>流程：<br>a.创建一个document对象，设置好了xml内容;</p>
+<h1 id="2-使用DOM方法存取XML文件"><a href="#2-使用DOM方法存取XML文件" class="headerlink" title="2.使用DOM方法存取XML文件"></a><a id="fir2">2.使用DOM方法存取XML文件</a></h1><h3 id="2-1创建并输出XML文件流程："><a href="#2-1创建并输出XML文件流程：" class="headerlink" title="2.1创建并输出XML文件流程："></a>2.1创建并输出XML文件流程：</h3><p>a.创建一个document对象，设置好了xml内容;</p>
 <p>b.将document转化成source对象；</p>
 <p>c.创建outputStream对象，将outputStream对象作为参数，构造一个StreamResult对象；</p>
 <p>d.创建一个Transformer对象，调用transform方法，将source对象翻译转化成Result对象，串联起来一个完整输出流。</p>
@@ -196,6 +196,7 @@
 import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -224,21 +225,40 @@ public class Dom_xml {
          *     &lt;emale&gt;&lt;/emale&gt;
          * &lt;/rootaddr&gt;
          */
-        //创建各个节点
+        //创建根节点root
         Element root=document.createElement(&quot;rootaddr&quot;);
+        //创建第一组links
+        Element links=document.createElement(&quot;link&quot;);
         Element name=document.createElement(&quot;name&quot;);
         Element age=document.createElement(&quot;age&quot;);
         Element email=document.createElement(&quot;email&quot;);
+        //创建第二组links
+        Element links1=document.createElement(&quot;link&quot;);
+        Element name1=document.createElement(&quot;name&quot;);
+        Element age1=document.createElement(&quot;age&quot;);
+        Element email1=document.createElement(&quot;email&quot;);
         //设置节点内容和属性
-        root.setAttribute(&quot;id&quot;,&quot;username&quot;);
+        name.setAttribute(&quot;id&quot;,&quot;username&quot;);
         name.setTextContent(&quot;Charles Zheng&quot;);
-        age.setTextContent(&quot;25&quot;);
+        age.setTextContent(&quot;28&quot;);
         email.setTextContent(&quot;846743326@qq.com&quot;);
+        name1.setAttribute(&quot;id&quot;,&quot;username&quot;);
+        name1.setTextContent(&quot;郑必武&quot;);
+        age1.setTextContent(&quot;28&quot;);
+        email1.setTextContent(&quot;846743326@qq.com&quot;);
+
         //设置节点父子关系
         document.appendChild(root);
-        root.appendChild(name);
-        root.appendChild(age);
-        root.appendChild(email);
+        root.appendChild(links);
+        root.appendChild(links1);
+
+        links.appendChild(name);
+        links.appendChild(age);
+        links.appendChild(email);
+
+        links1.appendChild(name1);
+        links1.appendChild(age1);
+        links1.appendChild(email1);
 
         //获取输出流对象
         OutputStream or=new FileOutputStream(new File(&quot;myxml_demo.xml&quot;));
@@ -249,10 +269,48 @@ public class Dom_xml {
         //将dom树转化成source对象
         DOMSource source=new DOMSource(document);
 
-        //获取transformer对象，将source对象转翻译成result对象
+        //获取transformer对象
         TransformerFactory fc=TransformerFactory.newInstance();
         Transformer transformer= fc.newTransformer();
+        //设置输出编码格式
+        transformer.setOutputProperty(OutputKeys.ENCODING,&quot;UTF-8&quot;);
+        //将source转化成result，串联起输出流
         transformer.transform(source,result);
+    }
+}
+</code></pre><h3 id="2-2读取并打印XML文件流程："><a href="#2-2读取并打印XML文件流程：" class="headerlink" title="2.2读取并打印XML文件流程："></a>2.2读取并打印XML文件流程：</h3><p>a.将要读取的xml文件作为参数，创建一个document对象;</p>
+<p>b.获取要读取的节点集合NodeList</p>
+<p>c.使用NodeList的getLength（）和getItem（）方法遍历节点，打印输出读取的数据</p>
+<pre><code>import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
+
+
+/**
+ * 使用document读取xml文件并输出
+ * Created by chaersi on 2017/7/22.
+ */
+public class Dom_xml1 {
+    public static void main(String[] args) throws Exception{
+        //创建一个doc构造工厂实例
+        DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
+        //创建一个doc构造实例
+        DocumentBuilder builder=factory.newDocumentBuilder();
+        //使用要读取的xml文件作为参数创建一个Document 的实例，
+        Document document=builder.parse(new File(&quot;myxml_demo.xml&quot;));
+        //获取links每个节点
+        NodeList links=document.getElementsByTagName(&quot;link&quot;);
+        //循环输出links节点每个子节点的数据
+        for(int i=0;i&lt;links.getLength();i++){
+            Element e=(Element) links.item(i);
+            String name=e.getElementsByTagName(&quot;name&quot;).item(0).getFirstChild().getNodeValue();
+            String age=e.getElementsByTagName(&quot;age&quot;).item(0).getFirstChild().getNodeValue();
+            String email=e.getElementsByTagName(&quot;email&quot;).item(0).getFirstChild().getNodeValue();
+            System.out.println(&quot;姓名：&quot;+name+&quot;\t年龄：&quot;+age+&quot;\t邮箱：&quot;+email);
+        }
     }
 }
 </code></pre><h1 id="3-使用SAL方法存取XML文件"><a href="#3-使用SAL方法存取XML文件" class="headerlink" title="3.使用SAL方法存取XML文件"></a><a id="fir3">3.使用SAL方法存取XML文件</a></h1><h1 id="4-XML与Properties之间相互转化"><a href="#4-XML与Properties之间相互转化" class="headerlink" title="4.XML与Properties之间相互转化"></a><a id="fir4">4.XML与Properties之间相互转化</a></h1><h1 id="5-使用JDOM"><a href="#5-使用JDOM" class="headerlink" title="5.使用JDOM"></a><a id="fir5">5.使用JDOM</a></h1><h1 id="6-使用DOM4J"><a href="#6-使用DOM4J" class="headerlink" title="6.使用DOM4J"></a><a id="fir6">6.使用DOM4J</a></h1>
