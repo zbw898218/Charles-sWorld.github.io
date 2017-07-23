@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="https://zbw898218.github.io">
   <title>XML的使用总结 | Charles Zheng的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。">
-<meta name="keywords" content="JAVA开发,JAVA常用功能">
+  <meta name="description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。 W3C本身提供的XML：DOM和SAX，DOM:特点可以修改，不能读取大文件，SAX:可以读取大文件，但是不能修改 实际开发中会使用一些开源项目来简化开发难度。本文主要介绍两种 JDOM、DOM4J。">
+<meta name="keywords" content="JAVA常用功能,JAVA开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="XML的使用总结">
 <meta property="og:url" content="https://zbw898218.github.io/2017/07/22/XML大总结/index.html">
 <meta property="og:site_name" content="Charles Zheng的博客">
-<meta property="og:description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。">
-<meta property="og:updated_time" content="2017-07-23T07:25:59.700Z">
+<meta property="og:description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。 W3C本身提供的XML：DOM和SAX，DOM:特点可以修改，不能读取大文件，SAX:可以读取大文件，但是不能修改 实际开发中会使用一些开源项目来简化开发难度。本文主要介绍两种 JDOM、DOM4J。">
+<meta property="og:updated_time" content="2017-07-23T08:54:07.790Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XML的使用总结">
-<meta name="twitter:description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。">
+<meta name="twitter:description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。 W3C本身提供的XML：DOM和SAX，DOM:特点可以修改，不能读取大文件，SAX:可以读取大文件，但是不能修改 实际开发中会使用一些开源项目来简化开发难度。本文主要介绍两种 JDOM、DOM4J。">
   
     <link rel="alternative" href="/atom.xml" title="Charles Zheng的博客" type="application/atom+xml">
   
@@ -179,6 +179,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。</p>
+<p>W3C本身提供的XML：DOM和SAX，DOM:特点可以修改，不能读取大文件，SAX:可以读取大文件，但是不能修改</p>
+<p>实际开发中会使用一些开源项目来简化开发难度。本文主要介绍两种 JDOM、DOM4J。</p>
 <a id="more"></a>
 <p><a href="#fir1" id="fir">1.XML的简介</a></p>
 <p><a href="#fir2">2.使用DOM方法存取XML文件</a></p>
@@ -187,7 +189,7 @@
 <p><a href="#fir5">5.使用JDOM</a></p>
 <p><a href="#fir6">6.使用DOM4J</a></p>
 <h1 id="1-XML的简介"><a href="#1-XML的简介" class="headerlink" title="1.XML的简介"></a><a id="fir1" href="#fir">1.XML的简介</a></h1><p>XML:EXtensible Markup Language/可扩展标记语言</p>
-<p>按照我自己的理解，就是一个类似html的标签语言，通过自定义各种成对的标签，来记录相关数据并最终形成XML文件来保存数据以便长期使用。<br>（注：本文所有代码实例为简单起见，异常全部做抛出处理，敬请见谅！）</p>
+<p>按照我自己的理解，就是一个标签语言，通过自定义各种成对带闭合标签，来记录相关数据并最终形成XML文件来保存数据以便长期使用。<strong>（注：本文所有代码实例为简单起见，异常全部做抛出处理，敬请见谅！）</strong></p>
 <h1 id="2-使用DOM方法存取XML文件"><a href="#2-使用DOM方法存取XML文件" class="headerlink" title="2.使用DOM方法存取XML文件"></a><a id="fir2" href="#fir">2.使用DOM方法存取XML文件</a></h1><h3 id="2-1-DOM创建并输出XML文件流程："><a href="#2-1-DOM创建并输出XML文件流程：" class="headerlink" title="2.1 DOM创建并输出XML文件流程："></a>2.1 DOM创建并输出XML文件流程：</h3><p>a.创建一个document对象，设置好了xml内容;</p>
 <p>b.将document转化成source对象；</p>
 <p>c.创建outputStream对象，将outputStream对象作为参数，构造一个StreamResult对象；</p>
@@ -442,7 +444,100 @@ public class XmlToProperties {
         myPro.store(os,null);
     }
 }
-</code></pre><h1 id="5-使用JDOM"><a href="#5-使用JDOM" class="headerlink" title="5.使用JDOM"></a><a id="fir5" href="#fir">5.使用JDOM</a></h1><h1 id="6-使用DOM4J"><a href="#6-使用DOM4J" class="headerlink" title="6.使用DOM4J"></a><a id="fir6" href="#fir">6.使用DOM4J</a></h1>
+</code></pre><h1 id="5-使用JDOM"><a href="#5-使用JDOM" class="headerlink" title="5.使用JDOM"></a><a id="fir5" href="#fir">5.使用JDOM</a></h1><p>JDOM=DOM的可修改性+SAX的文件读取性，其本身是一个免费的开源组件，可直接下载使用</p>
+<h3 id="5-1-JDOM输出XML文件"><a href="#5-1-JDOM输出XML文件" class="headerlink" title="5.1 JDOM输出XML文件"></a>5.1 JDOM输出XML文件</h3><p>流程：</p>
+<p>a.准备一个document对象，设置每个元素名称、属性、内容以及父子关系</p>
+<p>b.创建一个XMLOutputter对象，设置字符集</p>
+<p>c.使用XMLOutputter对象的output方法，将document对象输出到指定路径的指定文件中</p>
+<pre><code>import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.output.XMLOutputter;
+import java.io.File;
+import java.io.FileOutputStream;
+/**
+ * 使用JDOM进行XML的输出操作
+ * Created by chaersi on 2017/7/23.
+ */
+public class JDom_demo {
+    public static void main(String[] args) throws Exception{
+        //创建系列节点元素和属性
+        Element roots=new Element(&quot;roots&quot;);
+        Element links=new Element(&quot;links&quot;);
+        Element name=new Element(&quot;name&quot;);
+        Element age=new Element(&quot;age&quot;);
+        Element email=new Element(&quot;email&quot;);
+
+        Element links1=new Element(&quot;links&quot;);
+        Element name1=new Element(&quot;name&quot;);
+        Element age1=new Element(&quot;age&quot;);
+        Element email1=new Element(&quot;email&quot;);
+
+        Attribute id=new Attribute(&quot;id&quot;,&quot;username&quot;);
+        //创建document对象，加入根节点
+        Document doc=new Document(roots);
+        //设置各个元素填充内容
+        name.setText(&quot;Charles Zheng&quot;);
+        name.setAttribute(id);
+        age.setText(&quot;28&quot;);
+        email.setText(&quot;846743326@qq.com&quot;);
+        name1.setText(&quot;郑必武&quot;);
+        age1.setText(&quot;28&quot;);
+        email1.setText(&quot;846743326@qq.com&quot;);
+        //设置各个节点的父子关系
+        links.addContent(name);
+        links.addContent(age);
+        links.addContent(email);
+        links1.addContent(name1);
+        links1.addContent(age1);
+        links1.addContent(email1);
+        roots.addContent(links);
+        roots.addContent(links1);
+        //创建一个XMLOutputter输出流对象，设置字符集
+        XMLOutputter out=new XMLOutputter();
+        out.setFormat(out.getFormat().setEncoding(&quot;utf-8&quot;));
+        //调用输出流对象的output方法，将document对象输出到指定路径的输出流文件
+        out.output(doc,new FileOutputStream(new File(&quot;JDom_demo.xml&quot;)));
+    }
+}
+</code></pre><h3 id="5-1-JDOM读取XML文件"><a href="#5-1-JDOM读取XML文件" class="headerlink" title="5.1 JDOM读取XML文件"></a>5.1 JDOM读取XML文件</h3><p>流程：</p>
+<p>a.创建一个基于sax的解析器对象builder</p>
+<p>b.利用上一步获取的builder对象调取build方法解析xml源文件，获取document对象</p>
+<p>c.获取根节点，根据根节点获取要输出的节点对象集合，循环输出元素内容</p>
+<pre><code>import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
+import java.io.File;
+import java.util.List;
+/**
+ * Created by chaersi on 2017/7/23.
+ */
+public class JDom_demo1 {
+    public static void main(String[] args) throws Exception{
+        //创建一个基于sax的解析器builder
+        SAXBuilder builder=new SAXBuilder();
+        //使用builder.build方法，解析要读取的xml文件，生成一个document对象
+        Document doc_read=builder.build(new File(&quot;JDom_demo.xml&quot;));
+        //取得根元素
+        Element roots=doc_read.getRootElement();
+        //取得要读取的节点列表，循环输出
+        List list= roots.getChildren(&quot;links&quot;);
+        for(int x=0;x&lt;list.size();x++){
+            Element e=(Element) list.get(x);
+            String name=e.getChildText(&quot;name&quot;);
+            String age=e.getChildText(&quot;age&quot;);
+            String email=e.getChildText(&quot;email&quot;);
+            Attribute id=e.getChild(&quot;name&quot;).getAttribute(&quot;id&quot;);
+            String ids=null;
+            if(id!=null){
+                ids=id.getValue();
+            }
+            System.out.println(&quot;姓名：&quot;+name+&quot;\t属性名称：&quot;+ids+&quot;\t年龄：&quot;+age+&quot;\t邮箱：&quot;+email);
+        }
+    }
+}
+</code></pre><h1 id="6-使用DOM4J"><a href="#6-使用DOM4J" class="headerlink" title="6.使用DOM4J"></a><a id="fir6" href="#fir">6.使用DOM4J</a></h1>
       
 
       
@@ -481,11 +576,11 @@ public class XmlToProperties {
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JAVA开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JAVA常用功能</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JAVA常用功能</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JAVA开发</a>
         		</li>
       		
 		</ul>
@@ -686,7 +781,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+                <a href="javascript:void(0)" class="js-tag color4">JAVA常用功能</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -694,11 +789,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JAVA常用功能</a>
+                <a href="javascript:void(0)" class="js-tag color3">Linux杂记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Linux杂记</a>
+                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
               </li>
              
               <li class="article-tag-list-item">
