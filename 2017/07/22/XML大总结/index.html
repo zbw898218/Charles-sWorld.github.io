@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="https://zbw898218.github.io">
   <title>XML的使用总结 | Charles Zheng的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。 1.XML的简介 2.使用DOM方法存取XML文件 3.使用SAL方法存取XML文件 4.XML与Properties之间相互转化 5.使用JDOM 6.使用DOM4J">
+  <meta name="description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。">
 <meta name="keywords" content="JAVA开发,JAVA常用功能">
 <meta property="og:type" content="article">
 <meta property="og:title" content="XML的使用总结">
 <meta property="og:url" content="https://zbw898218.github.io/2017/07/22/XML大总结/index.html">
 <meta property="og:site_name" content="Charles Zheng的博客">
-<meta property="og:description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。 1.XML的简介 2.使用DOM方法存取XML文件 3.使用SAL方法存取XML文件 4.XML与Properties之间相互转化 5.使用JDOM 6.使用DOM4J">
-<meta property="og:updated_time" content="2017-07-23T02:11:19.251Z">
+<meta property="og:description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。">
+<meta property="og:updated_time" content="2017-07-23T02:15:27.980Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XML的使用总结">
-<meta name="twitter:description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。 1.XML的简介 2.使用DOM方法存取XML文件 3.使用SAL方法存取XML文件 4.XML与Properties之间相互转化 5.使用JDOM 6.使用DOM4J">
+<meta name="twitter:description" content="JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。">
   
     <link rel="alternative" href="/atom.xml" title="Charles Zheng的博客" type="application/atom+xml">
   
@@ -179,16 +179,16 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>JAVA开发中，经常要使用到XML，在学习了一段时间后，决定整理一下，写一篇XML使用总结，以便将来随时查阅。</p>
-<p><a href="#fir">1.XML的简介<a></a></a></p>
-<p>2.使用DOM方法存取XML文件</p>
-<p>3.使用SAL方法存取XML文件</p>
-<p>4.XML与Properties之间相互转化</p>
-<p>5.使用JDOM</p>
-<p>6.使用DOM4J</p>
 <a id="more"></a>
-<h1 id="1-XML的简介"><a href="#1-XML的简介" class="headerlink" title="1.XML的简介"></a><a id="fir" name="fir1">1.XML的简介</a></h1><p>XML:EXtensible Markup Language/可扩展标记语言</p>
+<p><a href="#fir1">1.XML的简介</a></p>
+<p><a href="#fir2">2.使用DOM方法存取XML文件</a></p>
+<p><a href="#fi3r">3.使用SAL方法存取XML文件</a></p>
+<p><a href="#fir4">4.XML与Properties之间相互转化</a></p>
+<p><a href="#fir5">5.使用JDOM</a></p>
+<p><a href="#fir6">6.使用DOM4J</a></p>
+<h1 id="1-XML的简介"><a href="#1-XML的简介" class="headerlink" title="1.XML的简介"></a><a id="fir1" name="fir1">1.XML的简介</a></h1><p>XML:EXtensible Markup Language/可扩展标记语言</p>
 <p>按照我自己的理解，就是一个类似html的标签语言，通过自定义各种成对的标签，来记录相关数据并最终形成XML文件来保存数据以便长期使用。<br>（注：本文所有代码实例为简单起见，异常全部做抛出处理，敬请见谅！）</p>
-<h1 id="2-使用DOM方法存取XML文件"><a href="#2-使用DOM方法存取XML文件" class="headerlink" title="2.使用DOM方法存取XML文件"></a>2.使用DOM方法存取XML文件</h1><p>流程：<br>a.创建一个document对象，设置好了xml内容;</p>
+<h1 id="2-使用DOM方法存取XML文件"><a href="#2-使用DOM方法存取XML文件" class="headerlink" title="2.使用DOM方法存取XML文件"></a><a id="fir2">2.使用DOM方法存取XML文件</a></h1><p>流程：<br>a.创建一个document对象，设置好了xml内容;</p>
 <p>b.将document转化成source对象；</p>
 <p>c.创建outputStream对象，将outputStream对象作为参数，构造一个StreamResult对象；</p>
 <p>d.创建一个Transformer对象，调用transform方法，将source对象翻译转化成Result对象，串联起来一个完整输出流。</p>
@@ -255,7 +255,7 @@ public class Dom_xml {
         transformer.transform(source,result);
     }
 }
-</code></pre><h1 id="3-使用SAL方法存取XML文件"><a href="#3-使用SAL方法存取XML文件" class="headerlink" title="3.使用SAL方法存取XML文件"></a>3.使用SAL方法存取XML文件</h1><h1 id="4-XML与Properties之间相互转化"><a href="#4-XML与Properties之间相互转化" class="headerlink" title="4.XML与Properties之间相互转化"></a>4.XML与Properties之间相互转化</h1><h1 id="5-使用JDOM"><a href="#5-使用JDOM" class="headerlink" title="5.使用JDOM"></a>5.使用JDOM</h1><h1 id="6-使用DOM4J"><a href="#6-使用DOM4J" class="headerlink" title="6.使用DOM4J"></a>6.使用DOM4J</h1>
+</code></pre><h1 id="3-使用SAL方法存取XML文件"><a href="#3-使用SAL方法存取XML文件" class="headerlink" title="3.使用SAL方法存取XML文件"></a><a id="fir3">3.使用SAL方法存取XML文件</a></h1><h1 id="4-XML与Properties之间相互转化"><a href="#4-XML与Properties之间相互转化" class="headerlink" title="4.XML与Properties之间相互转化"></a><a id="fir4">4.XML与Properties之间相互转化</a></h1><h1 id="5-使用JDOM"><a href="#5-使用JDOM" class="headerlink" title="5.使用JDOM"></a><a id="fir5">5.使用JDOM</a></h1><h1 id="6-使用DOM4J"><a href="#6-使用DOM4J" class="headerlink" title="6.使用DOM4J"></a><a id="fir6">6.使用DOM4J</a></h1>
       
 
       
