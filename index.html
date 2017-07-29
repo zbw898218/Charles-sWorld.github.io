@@ -179,140 +179,10 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>java代理设计模式，按照我自己的理解，即可分为如下几步：</p>
-<h4 id="1-首先定义一个公共接口，规范-定义一组方法；"><a href="#1-首先定义一个公共接口，规范-定义一组方法；" class="headerlink" title="1.首先定义一个公共接口，规范/定义一组方法；"></a>1.首先定义一个公共接口，规范/定义一组方法；</h4><h4 id="2-定义一个实现类，实现接口，负责规范-方法的实际实现；"><a href="#2-定义一个实现类，实现接口，负责规范-方法的实际实现；" class="headerlink" title="2.定义一个实现类，实现接口，负责规范/方法的实际实现；"></a>2.定义一个实现类，实现接口，负责规范/方法的实际实现；</h4><h4 id="3-定义一个代理类，实现接口，并拥有实现类的对象引用，通过在每一个方法中调用实现类去完成任务，同时添加更多额外功能；"><a href="#3-定义一个代理类，实现接口，并拥有实现类的对象引用，通过在每一个方法中调用实现类去完成任务，同时添加更多额外功能；" class="headerlink" title="3.定义一个代理类，实现接口，并拥有实现类的对象引用，通过在每一个方法中调用实现类去完成任务，同时添加更多额外功能；"></a>3.定义一个代理类，实现接口，并拥有实现类的对象引用，通过在每一个方法中调用实现类去完成任务，同时添加更多额外功能；</h4><h4 id="4-定义一个工厂类，负责提供一个newInstence方法，返回一个公共接口的引用，实际指向一个代理类的对象。"><a href="#4-定义一个工厂类，负责提供一个newInstence方法，返回一个公共接口的引用，实际指向一个代理类的对象。" class="headerlink" title="4.定义一个工厂类，负责提供一个newInstence方法，返回一个公共接口的引用，实际指向一个代理类的对象。"></a>4.定义一个工厂类，负责提供一个newInstence方法，返回一个公共接口的引用，实际指向一个代理类的对象。</h4><p>当完成了上述4个步骤后，其他程序即可通过创建一个工厂类对象，调用newInstence方法获得代理类对象，来实现代理开发，将具体实现细节与额外功能分开。</p>
-<p>代理模式在JAVA开发中常用于与数据库的数据交互的dao层。下面通过一个简单应用实例来理解代理模式的精髓：</p>
-<p>注：<br>1.本例dao层细节：</p>
-<h4 id="接口：定义登陆校验标准"><a href="#接口：定义登陆校验标准" class="headerlink" title="接口：定义登陆校验标准"></a>接口：定义登陆校验标准</h4><h4 id="实现类：实现数据库信息校验的方法"><a href="#实现类：实现数据库信息校验的方法" class="headerlink" title="实现类：实现数据库信息校验的方法"></a>实现类：实现数据库信息校验的方法</h4><h4 id="代理类：提供和关闭数据库连接对象"><a href="#代理类：提供和关闭数据库连接对象" class="headerlink" title="代理类：提供和关闭数据库连接对象"></a>代理类：提供和关闭数据库连接对象</h4><h4 id="工厂类：提供获取代理类对象方法"><a href="#工厂类：提供获取代理类对象方法" class="headerlink" title="工厂类：提供获取代理类对象方法"></a>工厂类：提供获取代理类对象方法</h4><p>2.本例使用的数据库 ：mysql ，实体类：user（userid、password、name），本例所有编写的类为方便，所有异常抛出处理。</p>
-<p>1.编写实体类：</p>
-<pre><code>public class User{
-        private String userid;
-        private String password;
-        private String name;
-        public User(){}
-        public void setUserid(String userid){
-            this.userid=userid;
-        }
-        public void setPassword(String password){
-            this.password=password;
-        }
-        public void setName(String name){
-            this.name=name;
-        }
-        public String getUserid(){
-            return this.userid;
-        }
-        public String getPassword(){
-            return this.password;
-        }
-        public String getName(){
-            return this.name;
-        }    
-    }
-</code></pre><p>2.编写数据库连接类，提供获取和关闭数据库连接的方法</p>
-<pre><code>public class DatabaseConnection{
-    private static final String DRIVER=&quot;com.mysql.cj.jdbc.Driver&quot;;
-    private static final String URL=&quot;jdbc:mysql://localhost:3306/java_web?useSSL=true&amp;serverTimezone=UTC&amp;amp&amp;characterEncoding=utf-8&quot;;
-    private static final String USERNAME=&quot;root&quot;;
-    private static final String PASSWORD=&quot;123456&quot;;
-    private Connection conn=null;
-    //初始化数据库连接对象
-    public DatabaseConnection() throws Exception{
-        Class.forName(DRIVER);
-        this.conn=DriverManager.getConnection(URL,USERNAME,PASSWORD);
-    }
-    //获得数据库连接
-    public Connection getConnection(){
-        return this.conn;
-    }
-    //关闭数据库连接
-    public void closed() throws Exception{
-        try{
-            this.conn.close();
-        }catch(Exception e){
-            throw e;
-        }
-    }
-}
-</code></pre><p>3.创建公共接口：通过传入登陆的user对象，检索数据库user表，返回登陆结果</p>
-<pre><code>public interface IUserDAO{
-    boolean findLogin(User user) throws Exception;
-}
-</code></pre><p>4.创建具体实现类：提供接收数据库连接对象的构造方法</p>
-<pre><code>public class UserDAOImp implements IUserDAO{
-    private Connection conn=null;
-    private PreparedStatement pst=null;
-    public UserDAOImp(Connection conn){
-        this.conn=conn;
-    }
-    //登陆校验的具体实现方法
-    public boolean findLogin(User user) throws Exception{        
-        boolean flg=false;
-        String sql=&quot;select name from User WHERE userid=? and password=?&quot;;
-        pst=conn.prepareStatement(sql);
-        pst.setString(1,user.getUserid());
-        pst.setString(2,user.getPassword());
-        ResultSet rs=pst.executeQuery();
-        if(rs.next()){
-            flg=true;
-            user.setName(rs.getString(1));
-        }
-        try{
-            pst.close();
-        }catch(Exception e){
-            throw e;
-        }
-
-        return flg;
-    }
-}
-</code></pre><p>5.创建代理类：实例化实现类传入数据库对象；登陆校验方法中调用实现类实现登陆校验，并关闭数据库连接对象</p>
-<pre><code>public class UserDAOProxy implements IUserDAO{
-    private Connection conn=null;
-    private IUserDAO userdao=null;
-    private DatabaseConnection dbc=null;
-    public UserDAOProxy() throws Exception{
-        try{
-            dbc=new DatabaseConnection();
-            this.conn=dbc.getConnection();
-            this.userdao=new UserDAOImp(this.conn);
-        }catch(Exception e){
-            throw e;
-        }
-    }
-    public boolean findLogin(User user) throws Exception{        
-        boolean flg=false;            
-        try{
-            flg=userdao.findLogin(user);            
-        }catch(Exception e){
-            throw e;
-        }finally{
-            if(this.conn!=null){
-                try{
-                    dbc.closed();
-                }catch(Exception e){
-                    throw e;
-                }                
-            }        
-        }        
-        return flg;
-    }
-}
-</code></pre><p>6.创建工厂类：提供获取代理类对象的方法</p>
-<pre><code>public class UserDAOFactory {
-    private  IUserDAO userdao=null;
-    public UserDAOFactory() throws Exception{
-        try{
-            userdao=new UserDAOProxy();
-        }catch(Exception e){
-            throw e;
-        }            
-    }
-    public  IUserDAO getUserDAONewInstance(){        
-        return userdao;
-    }    
-}
-</code></pre><hr>
-<h2 id="至此，一个简单的静态代理设计模式的应用实例就完成了。当然这个例子非常简单，并且是属于静态代理，局限性比较大。之后有时间，会研究下动态代理模式。将本篇完善起来"><a href="#至此，一个简单的静态代理设计模式的应用实例就完成了。当然这个例子非常简单，并且是属于静态代理，局限性比较大。之后有时间，会研究下动态代理模式。将本篇完善起来" class="headerlink" title="至此，一个简单的静态代理设计模式的应用实例就完成了。当然这个例子非常简单，并且是属于静态代理，局限性比较大。之后有时间，会研究下动态代理模式。将本篇完善起来"></a>至此，一个简单的静态代理设计模式的应用实例就完成了。当然这个例子非常简单，并且是属于静态代理，局限性比较大。之后有时间，会研究下动态代理模式。将本篇完善起来</h2>
+<h4 id="1-首先定义一个公共接口，规范-定义一组方法；"><a href="#1-首先定义一个公共接口，规范-定义一组方法；" class="headerlink" title="1.首先定义一个公共接口，规范/定义一组方法；"></a>1.首先定义一个公共接口，规范/定义一组方法；</h4><h4 id="2-定义一个实现类，实现接口，负责规范-方法的实际实现；"><a href="#2-定义一个实现类，实现接口，负责规范-方法的实际实现；" class="headerlink" title="2.定义一个实现类，实现接口，负责规范/方法的实际实现；"></a>2.定义一个实现类，实现接口，负责规范/方法的实际实现；</h4><h4 id="3-定义一个代理类，实现接口，并拥有实现类的对象引用，通过在每一个方法中调用实现类去完成任务，同时添加更多额外功能；"><a href="#3-定义一个代理类，实现接口，并拥有实现类的对象引用，通过在每一个方法中调用实现类去完成任务，同时添加更多额外功能；" class="headerlink" title="3.定义一个代理类，实现接口，并拥有实现类的对象引用，通过在每一个方法中调用实现类去完成任务，同时添加更多额外功能；"></a>3.定义一个代理类，实现接口，并拥有实现类的对象引用，通过在每一个方法中调用实现类去完成任务，同时添加更多额外功能；</h4><h4 id="4-定义一个工厂类，负责提供一个newInstence方法，返回一个公共接口的引用，实际指向一个代理类的对象。"><a href="#4-定义一个工厂类，负责提供一个newInstence方法，返回一个公共接口的引用，实际指向一个代理类的对象。" class="headerlink" title="4.定义一个工厂类，负责提供一个newInstence方法，返回一个公共接口的引用，实际指向一个代理类的对象。"></a>4.定义一个工厂类，负责提供一个newInstence方法，返回一个公共接口的引用，实际指向一个代理类的对象。</h4><p>当完成了上述4个步骤后，其他程序即可通过创建一个工厂类对象，调用newInstence方法获得代理类对象，来实现代理开发，将具体实现细节与额外功能分开。<br>
+        
+          <a class="article-more-a" href="/2017/07/29/代理设计模式在DAO模式中的应用范例/#more">more >></a>
+        
       
 
       
@@ -388,11 +258,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JAVA常用功能</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JAVA开发</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JAVA开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JAVA常用功能</a>
         		</li>
       		
 		</ul>
@@ -509,11 +379,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JAVA开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JDBC</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JDBC</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JAVA开发</a>
         		</li>
       		
 		</ul>
@@ -572,11 +442,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JAVA开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JDBC</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JDBC</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JAVA开发</a>
         		</li>
       		
 		</ul>
@@ -767,7 +637,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JAVA常用功能</a>
+                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -779,7 +649,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color4">JAVA常用功能</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -787,7 +657,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
             
             <div class="clearfix"></div>

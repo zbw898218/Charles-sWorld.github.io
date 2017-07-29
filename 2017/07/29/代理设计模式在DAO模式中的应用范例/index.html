@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://zbw898218.github.io/2017/07/29/代理设计模式在DAO模式中的应用范例/index.html">
 <meta property="og:site_name" content="Charles Zheng的博客">
 <meta property="og:description" content="java代理设计模式，按照我自己的理解，即可分为如下几步： 1.首先定义一个公共接口，规范/定义一组方法；2.定义一个实现类，实现接口，负责规范/方法的实际实现；3.定义一个代理类，实现接口，并拥有实现类的对象引用，通过在每一个方法中调用实现类去完成任务，同时添加更多额外功能；4.定义一个工厂类，负责提供一个newInstence方法，返回一个公共接口的引用，实际指向一个代理类的对象。当完成了上述">
-<meta property="og:updated_time" content="2017-07-29T10:30:30.501Z">
+<meta property="og:updated_time" content="2017-07-29T11:33:06.791Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA代理设计模式的实例分析">
 <meta name="twitter:description" content="java代理设计模式，按照我自己的理解，即可分为如下几步： 1.首先定义一个公共接口，规范/定义一组方法；2.定义一个实现类，实现接口，负责规范/方法的实际实现；3.定义一个代理类，实现接口，并拥有实现类的对象引用，通过在每一个方法中调用实现类去完成任务，同时添加更多额外功能；4.定义一个工厂类，负责提供一个newInstence方法，返回一个公共接口的引用，实际指向一个代理类的对象。当完成了上述">
@@ -179,7 +179,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>java代理设计模式，按照我自己的理解，即可分为如下几步：</p>
-<h4 id="1-首先定义一个公共接口，规范-定义一组方法；"><a href="#1-首先定义一个公共接口，规范-定义一组方法；" class="headerlink" title="1.首先定义一个公共接口，规范/定义一组方法；"></a>1.首先定义一个公共接口，规范/定义一组方法；</h4><h4 id="2-定义一个实现类，实现接口，负责规范-方法的实际实现；"><a href="#2-定义一个实现类，实现接口，负责规范-方法的实际实现；" class="headerlink" title="2.定义一个实现类，实现接口，负责规范/方法的实际实现；"></a>2.定义一个实现类，实现接口，负责规范/方法的实际实现；</h4><h4 id="3-定义一个代理类，实现接口，并拥有实现类的对象引用，通过在每一个方法中调用实现类去完成任务，同时添加更多额外功能；"><a href="#3-定义一个代理类，实现接口，并拥有实现类的对象引用，通过在每一个方法中调用实现类去完成任务，同时添加更多额外功能；" class="headerlink" title="3.定义一个代理类，实现接口，并拥有实现类的对象引用，通过在每一个方法中调用实现类去完成任务，同时添加更多额外功能；"></a>3.定义一个代理类，实现接口，并拥有实现类的对象引用，通过在每一个方法中调用实现类去完成任务，同时添加更多额外功能；</h4><h4 id="4-定义一个工厂类，负责提供一个newInstence方法，返回一个公共接口的引用，实际指向一个代理类的对象。"><a href="#4-定义一个工厂类，负责提供一个newInstence方法，返回一个公共接口的引用，实际指向一个代理类的对象。" class="headerlink" title="4.定义一个工厂类，负责提供一个newInstence方法，返回一个公共接口的引用，实际指向一个代理类的对象。"></a>4.定义一个工厂类，负责提供一个newInstence方法，返回一个公共接口的引用，实际指向一个代理类的对象。</h4><p>当完成了上述4个步骤后，其他程序即可通过创建一个工厂类对象，调用newInstence方法获得代理类对象，来实现代理开发，将具体实现细节与额外功能分开。</p>
+<h4 id="1-首先定义一个公共接口，规范-定义一组方法；"><a href="#1-首先定义一个公共接口，规范-定义一组方法；" class="headerlink" title="1.首先定义一个公共接口，规范/定义一组方法；"></a>1.首先定义一个公共接口，规范/定义一组方法；</h4><h4 id="2-定义一个实现类，实现接口，负责规范-方法的实际实现；"><a href="#2-定义一个实现类，实现接口，负责规范-方法的实际实现；" class="headerlink" title="2.定义一个实现类，实现接口，负责规范/方法的实际实现；"></a>2.定义一个实现类，实现接口，负责规范/方法的实际实现；</h4><h4 id="3-定义一个代理类，实现接口，并拥有实现类的对象引用，通过在每一个方法中调用实现类去完成任务，同时添加更多额外功能；"><a href="#3-定义一个代理类，实现接口，并拥有实现类的对象引用，通过在每一个方法中调用实现类去完成任务，同时添加更多额外功能；" class="headerlink" title="3.定义一个代理类，实现接口，并拥有实现类的对象引用，通过在每一个方法中调用实现类去完成任务，同时添加更多额外功能；"></a>3.定义一个代理类，实现接口，并拥有实现类的对象引用，通过在每一个方法中调用实现类去完成任务，同时添加更多额外功能；</h4><h4 id="4-定义一个工厂类，负责提供一个newInstence方法，返回一个公共接口的引用，实际指向一个代理类的对象。"><a href="#4-定义一个工厂类，负责提供一个newInstence方法，返回一个公共接口的引用，实际指向一个代理类的对象。" class="headerlink" title="4.定义一个工厂类，负责提供一个newInstence方法，返回一个公共接口的引用，实际指向一个代理类的对象。"></a>4.定义一个工厂类，负责提供一个newInstence方法，返回一个公共接口的引用，实际指向一个代理类的对象。</h4><p>当完成了上述4个步骤后，其他程序即可通过创建一个工厂类对象，调用newInstence方法获得代理类对象，来实现代理开发，将具体实现细节与额外功能分开。<br><a id="more"></a></p>
 <p>代理模式在JAVA开发中常用于与数据库的数据交互的dao层。下面通过一个简单应用实例来理解代理模式的精髓：</p>
 <p>注：<br>1.本例dao层细节：</p>
 <h4 id="接口：定义登陆校验标准"><a href="#接口：定义登陆校验标准" class="headerlink" title="接口：定义登陆校验标准"></a>接口：定义登陆校验标准</h4><h4 id="实现类：实现数据库信息校验的方法"><a href="#实现类：实现数据库信息校验的方法" class="headerlink" title="实现类：实现数据库信息校验的方法"></a>实现类：实现数据库信息校验的方法</h4><h4 id="代理类：提供和关闭数据库连接对象"><a href="#代理类：提供和关闭数据库连接对象" class="headerlink" title="代理类：提供和关闭数据库连接对象"></a>代理类：提供和关闭数据库连接对象</h4><h4 id="工厂类：提供获取代理类对象方法"><a href="#工厂类：提供获取代理类对象方法" class="headerlink" title="工厂类：提供获取代理类对象方法"></a>工厂类：提供获取代理类对象方法</h4><p>2.本例使用的数据库 ：mysql ，实体类：user（userid、password、name），本例所有编写的类为方便，所有异常抛出处理。</p>
@@ -556,7 +556,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JAVA常用功能</a>
+                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -568,7 +568,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color4">JAVA常用功能</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -576,7 +576,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
             
             <div class="clearfix"></div>
