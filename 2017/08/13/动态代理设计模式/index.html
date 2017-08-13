@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="https://zbw898218.github.io">
   <title>JAVA代理设计模式的补充-动态代理 | Charles Zheng的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在之前的JAVA代理设计模式的应用分析一文中，简单总结了静态代理模式的设计思路，本文将对其进行进一步补充，深入研究一下动态代理模式，并分析其在dao层的实际应用。 1.首先定义一个动态代理的InvocationHandler类，按需要设计代理类扩展方法2.定义一个工厂，负责接收真实对象，生成对应代理对象定义MyInvocationHandler类： 1.创建bind方法，绑定真实对象，返回代理对象">
+  <meta name="description" content="在之前的JAVA代理设计模式的应用分析一文中，简单总结了静态代理模式的设计思路，本文将对其进行进一步补充，深入研究一下动态代理模式，并分析其在dao层的实际应用。 1.首先定义一个动态代理的InvocationHandler类，按需要设计代理类扩展方法2.定义一个工厂，负责接收真实对象，生成对应代理对象">
 <meta name="keywords" content="设计模式,JAVA开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA代理设计模式的补充-动态代理">
 <meta property="og:url" content="https://zbw898218.github.io/2017/08/13/动态代理设计模式/index.html">
 <meta property="og:site_name" content="Charles Zheng的博客">
-<meta property="og:description" content="在之前的JAVA代理设计模式的应用分析一文中，简单总结了静态代理模式的设计思路，本文将对其进行进一步补充，深入研究一下动态代理模式，并分析其在dao层的实际应用。 1.首先定义一个动态代理的InvocationHandler类，按需要设计代理类扩展方法2.定义一个工厂，负责接收真实对象，生成对应代理对象定义MyInvocationHandler类： 1.创建bind方法，绑定真实对象，返回代理对象">
-<meta property="og:updated_time" content="2017-08-13T10:10:24.027Z">
+<meta property="og:description" content="在之前的JAVA代理设计模式的应用分析一文中，简单总结了静态代理模式的设计思路，本文将对其进行进一步补充，深入研究一下动态代理模式，并分析其在dao层的实际应用。 1.首先定义一个动态代理的InvocationHandler类，按需要设计代理类扩展方法2.定义一个工厂，负责接收真实对象，生成对应代理对象">
+<meta property="og:updated_time" content="2017-08-13T10:11:27.971Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA代理设计模式的补充-动态代理">
-<meta name="twitter:description" content="在之前的JAVA代理设计模式的应用分析一文中，简单总结了静态代理模式的设计思路，本文将对其进行进一步补充，深入研究一下动态代理模式，并分析其在dao层的实际应用。 1.首先定义一个动态代理的InvocationHandler类，按需要设计代理类扩展方法2.定义一个工厂，负责接收真实对象，生成对应代理对象定义MyInvocationHandler类： 1.创建bind方法，绑定真实对象，返回代理对象">
+<meta name="twitter:description" content="在之前的JAVA代理设计模式的应用分析一文中，简单总结了静态代理模式的设计思路，本文将对其进行进一步补充，深入研究一下动态代理模式，并分析其在dao层的实际应用。 1.首先定义一个动态代理的InvocationHandler类，按需要设计代理类扩展方法2.定义一个工厂，负责接收真实对象，生成对应代理对象">
   
     <link rel="alternative" href="/atom.xml" title="Charles Zheng的博客" type="application/atom+xml">
   
@@ -179,7 +179,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>在之前的</p><h3>JAVA代理设计模式的应用分析</h3>一文中，简单总结了静态代理模式的设计思路，本文将对其进行进一步补充，深入研究一下动态代理模式，并分析其在dao层的实际应用。<p></p>
-<h4 id="1-首先定义一个动态代理的InvocationHandler类，按需要设计代理类扩展方法"><a href="#1-首先定义一个动态代理的InvocationHandler类，按需要设计代理类扩展方法" class="headerlink" title="1.首先定义一个动态代理的InvocationHandler类，按需要设计代理类扩展方法"></a>1.首先定义一个动态代理的InvocationHandler类，按需要设计代理类扩展方法</h4><h4 id="2-定义一个工厂，负责接收真实对象，生成对应代理对象"><a href="#2-定义一个工厂，负责接收真实对象，生成对应代理对象" class="headerlink" title="2.定义一个工厂，负责接收真实对象，生成对应代理对象"></a>2.定义一个工厂，负责接收真实对象，生成对应代理对象</h4><p>定义MyInvocationHandler类：</p>
+<h4 id="1-首先定义一个动态代理的InvocationHandler类，按需要设计代理类扩展方法"><a href="#1-首先定义一个动态代理的InvocationHandler类，按需要设计代理类扩展方法" class="headerlink" title="1.首先定义一个动态代理的InvocationHandler类，按需要设计代理类扩展方法"></a>1.首先定义一个动态代理的InvocationHandler类，按需要设计代理类扩展方法</h4><h4 id="2-定义一个工厂，负责接收真实对象，生成对应代理对象"><a href="#2-定义一个工厂，负责接收真实对象，生成对应代理对象" class="headerlink" title="2.定义一个工厂，负责接收真实对象，生成对应代理对象"></a>2.定义一个工厂，负责接收真实对象，生成对应代理对象</h4><a id="more"></a>
+<p>定义MyInvocationHandler类：</p>
 <p>1.创建bind方法，绑定真实对象，返回代理对象</p>
 <p>2.创建提供数据库连接和关闭数据库连接的方法getConn()和closeConn()</p>
 <p>3.创建invoke方法，在调用真实对象之前执行getConn()，调用完真实对象执行closeConn()</p>
